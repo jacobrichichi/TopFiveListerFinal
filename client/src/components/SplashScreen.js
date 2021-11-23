@@ -48,16 +48,14 @@ export default function SplashScreen() {
                             width: "100%",
                             height: "100%",
                         }}>
-                            <Typography variant="h5" sx= {{paddingTop: "5%",paddingLeft:"10%", width:"80%"}}>
+                            <Typography variant="h5" sx= {{paddingTop: "10%",paddingLeft:"10%", width:"80%"}}>
                             Create top 5 lists of any category your heart desires. Movies, games, musicians, anything
                             </Typography>
                         </Box>
                 </Grid>
 
                 <Grid item xs = {1}>
-                    <div style = {{ borderLeft: '6px black', height: "5%"}}>
-
-                    </div>
+                    <hr width="1" size="100"></hr>
                 </Grid>    
 
                 <Grid item xs = {3}>
@@ -66,17 +64,14 @@ export default function SplashScreen() {
                             width: "100%",
                             height: "100%",
                         }}>
-                            <Typography variant="h5" sx= {{paddingTop: "5%",paddingLeft:"10%", width:"80%"}}>
+                            <Typography variant="h5" sx= {{paddingTop: "15%",paddingLeft:"10%", width:"80%"}}>
                                 Vote and comment on lists with people across the globe
                             </Typography>
                         </Box>
                 </Grid>
 
                 <Grid item xs = {1}>
-                    <div style =
-                            {{ borderLeft: 'grey', height: "5%"}}>
-
-                    </div>
+                    <hr width="1" size="100"></hr>      
                 </Grid> 
 
                 <Grid item xs = {3}>
@@ -86,7 +81,7 @@ export default function SplashScreen() {
                             height: "100%",
                         
                         }}>
-                            <Typography variant="h5" sx= {{paddingTop: "5%",paddingLeft:"10%", width:"80%"}}>
+                            <Typography variant="h5" sx= {{paddingTop: "10%",paddingLeft:"10%", width:"80%"}}>
                             Find the overall rankings within categories aggregated across all users
                             </Typography>
                         </Box>
