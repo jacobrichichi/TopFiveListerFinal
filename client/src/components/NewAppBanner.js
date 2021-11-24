@@ -83,7 +83,7 @@ export default function NewAppBanner() {
     }
 
     return(
-        <Grid container spacing = {2} sx = {{ backgroundColor: "rgba(159, 206, 209, 1.0)"}}>
+        <Grid container spacing = {2} sx = {{ backgroundColor: "#e6e6e6"}}>
             <Grid item xs = {1}>
                 <Typography                        
                         variant="h4"

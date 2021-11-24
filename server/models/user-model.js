@@ -7,8 +7,10 @@ const UserSchema = new Schema(
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         email: { type: String, required: true },
+        userName: { type: String, required: true},
         passwordHash: { type: String, required: true },
-        top5Lists: [{type: ObjectId, ref: 'Top5List'}]
+        top5Lists: [{type: ObjectId, ref: 'Top5List'}],
+        
     },
     { timestamps: true },
 )

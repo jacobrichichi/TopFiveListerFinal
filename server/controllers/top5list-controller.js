@@ -100,6 +100,132 @@ getTop5ListById = async (req, res) => {
         asyncFindUser(list);
     }).catch(err => console.log(err))
 }
+
+getPersonalLists = async (req, res) => {
+    await User.findOne({ _id: req.userId }, (err, user) => {
+        async function asyncFindList(email) {
+            await Top5List.find({ ownerEmail:email }, (err, top5Lists) => {
+                if(err){
+                    return res.status(400).json({success: false, error: err})
+                }
+
+                if (!top5Lists) {
+                    console.log("!top5Lists.length");
+                    return res
+                        .status(404)
+                        .json({ success: false, error: 'Top 5 Lists not found' })
+                }
+                else {
+                    console.log("Send the Top5List pairs");
+                    // PUT ALL THE LISTS INTO ID, NAME PAIRS
+                    let listsInfo = [];
+                    for (let key in top5Lists) {
+                        let list = top5Lists[key];
+                        let listDetails = {
+                            _id: list._id,
+                            name: list.name,
+                            likes: list.likes,
+                            dislikes: list.dislikes,
+                            views: list.views,
+                            publishDate: list.publishDate,
+                            ownerUsername: list.ownerUsername
+
+
+                        };
+                        listsInfo.push(listDetails);
+                    }
+                    return res.status(200).json({ success: true, listsInfo: listsInfo })
+                }
+            }).catch(err => console.log(err))
+        }
+        asyncFindList(user.email);
+    }).catch(err => console.log(err))
+
+}
+
+getAllLists = async (req, res) => {
+    await Top5List.find({}, (err, top5Lists) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!top5Lists.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Top 5 Lists not found` })
+        }
+        else{
+            let listsInfo = [];
+            for (let key in top5Lists) {
+                let list = top5Lists[key];
+                let listDetails = {
+                    _id: list._id,
+                    name: list.name,
+                    likes: list.likes,
+                    dislikes: list.dislikes,
+                    views: list.views,
+                    publishDate: list.publishDate,
+                    ownerUsername: list.ownerUsername
+
+
+                };
+                listsInfo.push(listDetails);
+                }
+            return res.status(200).json({ success: true, listsInfo: listsInfo })
+
+        }
+    }).catch(err => console.log(err))
+}
+
+getOtherUsersLists = async (req, res) => {
+    await User.findOne({ userName: req.username }, (err, user) => {
+        if(!user){
+            return({success: true, listsInfo: []})
+        }
+        else {
+
+            async function asyncFindList(email) {
+                await Top5List.find({ ownerEmail: email }, (err, top5Lists) => {
+                    if(err) {
+                        return res.status(400).json({ success: false, error: err })
+                    }
+                    if(!top5Lists) {
+                        return res
+                        .status(404)
+                        .json({ success: false, error: 'Top 5 Lists not found' })
+                    }
+                    else {
+                        console.log("Send the Top5List pairs");
+                        // PUT ALL THE LISTS INTO ID, NAME PAIRS
+                        let listsInfo = [];
+                        for (let key in top5Lists) {
+                            let list = top5Lists[key];
+                            let listDetails = {
+                                _id: list._id,
+                                name: list.name,
+                                likes: list.likes,
+                                dislikes: list.dislikes,
+                                views: list.views,
+                                publishDate: list.publishDate,
+                                ownerUsername: list.ownerUsername
+    
+    
+                            };
+                            listsInfo.push(listDetails);
+                        }
+                        return res.status(200).json({ success: true, listsInfo: listsInfo })
+                    }
+
+                }).catch(err => console.log(err))
+            }
+            asyncFindList(user.email);
+        }
+    }).catch(err => console.log(err))
+}
+
+getCommunityLists = async (req, res) => {
+
+}
+
 getTop5ListPairs = async (req, res) => {
     console.log("getTop5ListPairs");
     await User.findOne({ _id: req.userId }, (err, user) => {
@@ -120,16 +246,23 @@ getTop5ListPairs = async (req, res) => {
                 else {
                     console.log("Send the Top5List pairs");
                     // PUT ALL THE LISTS INTO ID, NAME PAIRS
-                    let pairs = [];
+                    let listsInfo = [];
                     for (let key in top5Lists) {
                         let list = top5Lists[key];
-                        let pair = {
+                        let listDetails = {
                             _id: list._id,
-                            name: list.name
+                            name: list.name,
+                            likes: list.likes,
+                            dislikes: list.dislikes,
+                            views: list.views,
+                            publishDate: list.publishDate,
+                            ownerUsername: list.ownerUsername
+
+
                         };
-                        pairs.push(pair);
+                        listsInfo.push(listDetails);
                     }
-                    return res.status(200).json({ success: true, idNamePairs: pairs })
+                    return res.status(200).json({ success: true, listsInfo: listsInfo })
                 }
             }).catch(err => console.log(err))
         }
@@ -215,5 +348,9 @@ module.exports = {
     getTop5ListById,
     getTop5ListPairs,
     getTop5Lists,
-    updateTop5List
+    updateTop5List,
+    getPersonalLists,
+    getAllLists,
+    getOtherUsersLists,
+    getCommunityLists
 }

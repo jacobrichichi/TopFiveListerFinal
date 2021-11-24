@@ -20,7 +20,7 @@ export default function NewEditToolbar(){
 
 
     const handlePersonalLists = (event) => {
-
+        store.getPersonalLists()
     }
 
     const handleAllLists = (event) => {
