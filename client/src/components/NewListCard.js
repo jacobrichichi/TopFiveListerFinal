@@ -71,9 +71,9 @@ export default function ListCard(props) {
                 backgroundColor = {backgroundColor}
                 sx = {{border: '2px solid black', borderRadius: "15px" }}
                 >
-                <Grid container spacing = {2} columns = {17}  sx = {{paddingTop: "1%", paddingLeft: "1%", paddingRight: "1%"}}>
+                <Grid container spacing = {2} columns = {17}  sx = {{paddingTop: "1%", paddingLeft: "1%", paddingRight: "1%", paddingBottom: "1%"}}>
                     <Grid item xs = {3}>
-                        <Typography variant = "h4">
+                        <Typography variant = "h4" sx = {{paddingBottom: "5%"}}>
                             {listInfo.name}
                         </Typography>
 
@@ -88,7 +88,7 @@ export default function ListCard(props) {
                     <Grid item xs = {2}>
                         <div style ={{display:"flex"}}>
                             <IconButton onClick = {handleLike}>
-                                <ThumbUpIcon/>
+                                <ThumbUpIcon sx = {{fontSize: "54px"}}/>
                             </IconButton>    
 
                             <Typography variant = "h5">
@@ -101,7 +101,7 @@ export default function ListCard(props) {
 
                         <div style ={{display:"flex" }}>
                             <IconButton onClick = {handleDislike}>
-                                <ThumbDownIcon />
+                                <ThumbDownIcon sx = {{fontSize: "54px"}}/>
                             </IconButton>    
 
                             <Typography variant = "h5">
@@ -113,7 +113,7 @@ export default function ListCard(props) {
                     <Grid item xs = {1}>
 
                         <IconButton onClick = {handleDelete}>
-                            <DeleteIcon/>
+                            <DeleteIcon sx = {{fontSize: "54px"}}/>
                         </IconButton>    
                     </Grid>
 
@@ -121,7 +121,7 @@ export default function ListCard(props) {
 
                 {openedListDetails}
 
-                <Grid container spacing = {2} columns = {17} sx = {{paddingBottom: "1%", paddingLeft: "1%", paddingRight: "1%"}}>
+                <Grid container spacing = {2} columns = {17} sx = {{paddingLeft: "1%", paddingRight: "1%"}}>
                     <Grid item xs = {3}>
                         {publishDateOrEdit}
                     </Grid>
@@ -138,7 +138,7 @@ export default function ListCard(props) {
 
                     <Grid item xs = {1}>
                         <IconButton onClick = {handleExpand}>
-                            <ExpandMoreIcon/>
+                            <ExpandMoreIcon sx = {{fontSize: "54px"}}/>
                         </IconButton>
                     </Grid>
 

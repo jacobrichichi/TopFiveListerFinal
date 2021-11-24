@@ -268,8 +268,8 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.getPersonalLists = async function(){
-        const response = await api.getPersonalLists();
+    store.getPersonalLists = async function(keyword){
+        const response = await api.getPersonalLists(keyword);
         if (response.status === 200) {
             let listsInfo = response.data.listsInfo;
 
@@ -284,8 +284,8 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.getAllLists = async function(){
-        const response = await api.getAllLists();
+    store.getAllLists = async function(keyword){
+        const response = await api.getAllLists(keyword);
         if (response.status === 200) {
             let listsInfo = response.data.listsInfo;
 
@@ -316,8 +316,8 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.getCommunityLists = async function(){
-        const response = await api.getCommunityLists();
+    store.getCommunityLists = async function(keyword){
+        const response = await api.getCommunityLists(keyword);
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION

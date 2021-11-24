@@ -33,12 +33,12 @@ export const createTop5List = (newListName, newItems, userEmail) => {
 export const deleteTop5ListById = (id) => api.delete(`/top5list/${id}`)
 export const getTop5ListById = (id) => api.get(`/top5list/${id}`)
 export const getTop5ListPairs = () => api.get(`/top5listpairs/`)
-export const getPersonalLists = () => api.get('/personaltop5lists/')
-export const getAllLists = () => api.get('/allLists/')
-export const getOtherUsersLists = (username) => {
-        return api.post('/otheruserslists', { username: username })
-    }
-export const getCommunityLists = () => api.get('/communitylists/')
+
+export const getPersonalLists = (keyword) => { return api.post('/personaltop5lists/', {keyword: keyword}) }
+export const getAllLists = (keyword) => { return api.post('/allLists/', {keyword: keyword}) }
+export const getOtherUsersLists = (username) => { return api.post('/otheruserslists', { username: username }) }
+export const getCommunityLists = (keyword) => { return api.post('/communitylists/', {keyword: keyword}) }
+
 export const updateTop5ListById = (id, top5List) => {
     return api.put(`/top5list/${id}`, {
         // SPECIFY THE PAYLOAD

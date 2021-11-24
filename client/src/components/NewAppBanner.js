@@ -91,7 +91,7 @@ export default function NewAppBanner() {
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}                        
                     >
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>T<sup>5</sup>L</Link>
+                        <Link style={{ textDecoration: 'none', color: 'green' }} to='/'>T<sup>5</sup>L</Link>
                 </Typography> 
             </Grid>
 

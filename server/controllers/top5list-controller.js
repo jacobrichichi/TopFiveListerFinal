@@ -103,18 +103,20 @@ getPersonalLists = async (req, res) => {
                     let listsInfo = [];
                     for (let key in top5Lists) {
                         let list = top5Lists[key];
-                        let listDetails = {
-                            _id: list._id,
-                            name: list.name,
-                            likes: list.likes,
-                            dislikes: list.dislikes,
-                            views: list.views,
-                            publishDate: list.publishDate,
-                            ownerUsername: list.ownerUsername
+                        if(list.name.startsWith(req.body.keyword)){
+                            let listDetails = {
+                                _id: list._id,
+                                name: list.name,
+                                likes: list.likes,
+                                dislikes: list.dislikes,
+                                views: list.views,
+                                publishDate: list.publishDate,
+                                ownerUsername: list.ownerUsername
 
 
-                        };
-                        listsInfo.push(listDetails);
+                            };
+                            listsInfo.push(listDetails);
+                        }
                     }
                     return res.status(200).json({ success: true, listsInfo: listsInfo })
                 }
@@ -139,19 +141,22 @@ getAllLists = async (req, res) => {
             let listsInfo = [];
             for (let key in top5Lists) {
                 let list = top5Lists[key];
-                let listDetails = {
-                    _id: list._id,
-                    name: list.name,
-                    likes: list.likes,
-                    dislikes: list.dislikes,
-                    views: list.views,
-                    publishDate: list.publishDate,
-                    ownerUsername: list.ownerUsername
+                if(list.name.startsWith(req.body.keyword)){
+                    let listDetails = {
+                        _id: list._id,
+                        name: list.name,
+                        likes: list.likes,
+                        dislikes: list.dislikes,
+                        views: list.views,
+                        publishDate: list.publishDate,
+                        ownerUsername: list.ownerUsername
 
 
-                };
-                listsInfo.push(listDetails);
+                    };
+                    listsInfo.push(listDetails);
                 }
+                }
+
             return res.status(200).json({ success: true, listsInfo: listsInfo })
 
         }
@@ -220,18 +225,19 @@ getCommunityLists = async (req, res) => {
             let listsInfo = [];
             for (let key in top5Lists) {
                 let list = communityLists[key];
-                let listDetails = {
-                    _id: list._id,
-                    name: list.name,
-                    likes: list.likes,
-                    dislikes: list.dislikes,
-                    views: list.views,
-                    lastEditDate: list.lastEditDate,
+                if(list.name.startsWith(req.body.keyword)){
+                    let listDetails = {
+                        _id: list._id,
+                        name: list.name,
+                        likes: list.likes,
+                        dislikes: list.dislikes,
+                        views: list.views,
+                        lastEditDate: list.lastEditDate,
+                    };
 
-
-                };
-                listsInfo.push(listDetails);
+                    listsInfo.push(listDetails);
                 }
+            }
             return res.status(200).json({ success: true, listsInfo: listsInfo })
 
         }

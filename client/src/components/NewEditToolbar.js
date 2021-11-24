@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth';
 import Button from '@mui/material/Button';
@@ -17,14 +17,14 @@ export default function NewEditToolbar(){
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
 
-
+    const [text, setText] = useState("");
 
     const handlePersonalLists = (event) => {
-        store.getPersonalLists();
+        store.getPersonalLists("");
     }
 
     const handleAllLists = (event) => {
-        store.getAllLists();
+        store.getAllLists("");
     }
 
     const handleSwitchToOtherUser = (event) => {
@@ -32,11 +32,33 @@ export default function NewEditToolbar(){
     }
 
     const handleCommunity = (event) => {
-        store.getCommunityLists();
+        store.getCommunityLists("");
     }
 
     const handleSortBy = (event) => {
         
+    }
+
+    const handleKeyPress = (event) => {
+        if (event.code === "Enter") {
+            if(store.listsCollectionType == 'OTHER_USER'){
+                store.getOtherUsersLists(text)
+            }
+            else if(store.listsCollectionType == 'PERSONAL'){
+                store.getPersonalLists(text)
+            }
+            else if(store.listsCollectionType == 'ALL_LISTS'){
+                store.getAllLists(text)
+            }
+            else{
+                store.getCommunityLists(text)
+            }
+
+        }
+    }
+
+    const handleUpdateText = (event) => {
+        setText(event.target.value);
     }
 
     let editStatus = false;
@@ -47,67 +69,65 @@ export default function NewEditToolbar(){
 
     return (
         <div>
-            <Grid container spacing = {1} columns = {23}>
-                <Grid item xs = {1}>
+            <Grid container spacing = {0} columns = {96}>
+                <Grid item xs = {5}>
                     <IconButton 
                         disabled={editStatus}
-                        onClick={handlePersonalLists}
-                        sx = {{height: "100%"}}
-                        size = "large">
-                            <HomeIcon fontSize = "large"/>
+                        onClick={handlePersonalLists}>
+                            <HomeIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
                 </Grid>
 
-                <Grid item xs = {1}>
+                <Grid item xs = {5}>
                     <IconButton 
                         disabled={editStatus}
                         onClick={handleAllLists}
-                        sx = {{height: "100%"}}
-                        size = "large">
-                            <GroupsIcon fontSize = "large" />
+                        sx = {{height: "100%"}}>
+                            <GroupsIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
                 </Grid>    
 
-                <Grid item xs = {1}>
+                <Grid item xs = {5}>
                     <IconButton 
                         disabled={editStatus}
                         onClick= {handleSwitchToOtherUser}
-                        sx = {{height: "100%"}}
-                        size = "large">
-                            <PersonIcon fontSize = "large"/>
+                        sx = {{height: "100%"}}>
+                            <PersonIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
                 </Grid>
 
-                <Grid item xs = {1}>
+                <Grid item xs = {5}>
                     <IconButton 
                         disabled={editStatus}
                         onClick={handleCommunity}
-                        sx = {{height: "100%"}}
-                        size = "large">
-                            <FunctionsIcon fontSize = "large"/>
+                        sx = {{height: "100%"}}>
+                            <FunctionsIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
                 </Grid>    
                 
-                <Grid item xs = {10}>
-                    <TextField sx = {{width: "100%", paddingTop: "2%"}} size= "small"/>
+                <Grid item xs = {40}>
+                    <TextField 
+                            onKeyPress={handleKeyPress}
+                            onChange={handleUpdateText}
+                            sx = {{width: "100%", paddingTop: "2%"}} 
+                            size= "small"/>
                 </Grid>
 
-                <Grid item xs = {6}>
+                <Grid item xs = {20}>
                 </Grid>
 
-                <Grid item xs = {2}>
+                <Grid item xs = {12}>
                     <Typography variant = "h5" sx ={{paddingTop: "10%"}}>
                         SORT BY
                     </Typography>
                 </Grid>
 
-                <Grid item xs = {1}>
+                <Grid item xs = {4}>
                     <IconButton 
                         disabled={editStatus}
                         onClick={handleSortBy}
-                        sx = {{height: "100%"}}
-                        size = "large">
-                            <SortIcon fontSize = "large"/>
+                        sx = {{height: "100%"}}>
+                            <SortIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
                 </Grid>
             </Grid>
