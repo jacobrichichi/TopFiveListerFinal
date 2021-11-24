@@ -20,19 +20,19 @@ export default function NewEditToolbar(){
 
 
     const handlePersonalLists = (event) => {
-        store.getPersonalLists()
+        store.getPersonalLists();
     }
 
     const handleAllLists = (event) => {
-
+        store.getAllLists();
     }
 
-    const handleOtherUser = (event) => {
-
+    const handleSwitchToOtherUser = (event) => {
+        store.getOtherUsersLists("");
     }
 
     const handleCommunity = (event) => {
-        
+        store.getCommunityLists();
     }
 
     const handleSortBy = (event) => {
@@ -71,7 +71,7 @@ export default function NewEditToolbar(){
                 <Grid item xs = {1}>
                     <IconButton 
                         disabled={editStatus}
-                        onClick={handleOtherUser}
+                        onClick= {handleSwitchToOtherUser}
                         sx = {{height: "100%"}}
                         size = "large">
                             <PersonIcon fontSize = "large"/>

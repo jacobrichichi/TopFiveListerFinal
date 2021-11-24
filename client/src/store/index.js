@@ -287,7 +287,7 @@ function GlobalStoreContextProvider(props) {
     store.getAllLists = async function(){
         const response = await api.getAllLists();
         if (response.status === 200) {
-            let listsInfo = response.data.top5Lists;
+            let listsInfo = response.data.listsInfo;
 
             storeReducer({
                 type: GlobalStoreActionType.LOAD_LISTS,
@@ -301,9 +301,9 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.getOtherUsersLists = async function(username){
-        const response = await api.getOtherUsersLists({ username: username });
+        const response = await api.getOtherUsersLists(username);
         if (response.status === 200) {
-            let listsInfo = response.data.top5Lists;
+            let listsInfo = response.data.listsInfo;
 
             storeReducer({
                 type: GlobalStoreActionType.LOAD_LISTS,
