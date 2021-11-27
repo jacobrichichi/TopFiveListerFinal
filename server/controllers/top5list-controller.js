@@ -9,8 +9,20 @@ createTop5List = (req, res) => {
             errorMessage: 'Improperly formatted request',
         })
     }
+    const listVals = {
+        name: body.name,
+        items: body.items,
+        ownerEmail: body.ownerEmail,
+        ownerUsername: body.ownerUserName,
+        likes: 0,
+        dislikes: 0,
+        views: 0,
+        publishDate: new Date(),
+        lastEditDate: new Date()
+    }
 
-    const top5List = new Top5List(body);
+    const top5List = new Top5List(listVals);
+
     if (!top5List) {
         return res.status(400).json({
             errorMessage: 'Improperly formatted request',

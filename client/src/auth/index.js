@@ -11,14 +11,18 @@ export const AuthActionType = {
     LOGIN_USER: "LOGIN_USER",
     LOGOUT_USER: "LOGOUT_USER",
     REGISTER_USER: "REGISTER_USER",
-    LOGIN_GUEST: "LOGIN_GUEST"
+    LOGIN_GUEST: "LOGIN_GUEST",
+    ADD_WRONG_CREDENTIALS: "ADD_WRONG_CREDENTIALS",
+    REMOVE_WRONG_CREDENTIALS: "REMOVE_WRONG_CREDENTIALS" 
 }
 
 function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
         loggedIn: false,
-        isGuest: false
+        isGuest: false,
+        wrongCredentials: null,
+        isWrongCredentials: false
     });
     const history = useHistory();
 
@@ -33,37 +37,68 @@ function AuthContextProvider(props) {
                 return setAuth({
                     user: payload.user,
                     loggedIn: payload.loggedIn,
-                    isGuest: auth.isGuest
+                    isGuest: auth.isGuest,
+                    wrongCredentials: null,
+                    isWrongCredentials: false
                 });
             }
             case AuthActionType.LOGIN_USER: {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
-                    isGuest: false
+                    isGuest: false,
+                    wrongCredentials: null,
+                    isWrongCredentials: false
                 })
             }
             case AuthActionType.LOGOUT_USER: {
                 return setAuth({
                     user: null,
                     loggedIn: false,
-                    isGuest: false
+                    isGuest: false,
+                    wrongCredentials: null,
+                    isWrongCredentials: false
                 })
             }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
                     loggedIn: true,
-                    isGuest: false
+                    isGuest: false,
+                    wrongCredentials: null,
+                    isWrongCredentials: false
                 })
             }
             case AuthActionType.LOGIN_GUEST: {
                 return setAuth({
                     user: null,
                     loggedIn: false,
-                    isGuest: true
+                    isGuest: true,
+                    wrongCredentials: null,
+                    isWrongCredentials: false
                 })
             }
+
+            case AuthActionType.ADD_WRONG_CREDENTIALS: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false,
+                    isGuest: false,
+                    wrongCredentials: payload.message,
+                    isWrongCredentials: true
+                })
+            }
+
+            case AuthActionType.REMOVE_WRONG_CREDENTIALS: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false,
+                    isGuest: false,
+                    wrongCredentials: null,
+                    isWrongCredentials: false
+                })
+            }
+
             default:
                 return auth;
         }
@@ -82,30 +117,59 @@ function AuthContextProvider(props) {
         }
     }
 
-    auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {
-        const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);      
+    auth.registerUser = async function(firstName, lastName, userName, email, password, passwordVerify) {
+        const response = await api.registerUser(firstName, lastName, userName, email, password, passwordVerify);      
         if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.REGISTER_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/login");
+            if(response.data.success){
+                authReducer({
+                    type: AuthActionType.REGISTER_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/login");
+            }
+            else {
+                authReducer({
+                    type: AuthActionType.ADD_WRONG_CREDENTIALS,
+                    payload: {
+                        message: response.data.errorMessage
+                    }
+                })
+            }
         }
     }
 
     auth.loginUser = async function(email, password) {
         const response = await api.loginUser(email, password);
         if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.LOGIN_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/");
+            if(response.data.success){
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/");
+            }
+            else {
+                authReducer({
+                    type: AuthActionType.ADD_WRONG_CREDENTIALS,
+                    payload: {
+                        message: response.data.errorMessage
+                    }
+                })
+            }
         }
+    }
+
+    auth.closeErrorMessage = async function(store) {
+        authReducer({
+            type: AuthActionType.REMOVE_WRONG_CREDENTIALS,
+            payload: {
+
+            }
+        })
     }
 
     auth.logoutUser = async function() {

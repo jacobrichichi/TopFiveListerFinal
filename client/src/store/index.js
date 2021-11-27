@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import jsTPS from '../common/jsTPS'
 import api from './store-request-api'
 import MoveItem_Transaction from '../transactions/MoveItem_Transaction'
 import UpdateItem_Transaction from '../transactions/UpdateItem_Transaction'
@@ -31,9 +30,6 @@ export const GlobalStoreActionType = {
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE"
 }
 
-// WE'LL NEED THIS TO PROCESS TRANSACTIONS
-const tps = new jsTPS();
-
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
 // AVAILABLE TO THE REST OF THE APPLICATION
 function GlobalStoreContextProvider(props) {
@@ -45,7 +41,8 @@ function GlobalStoreContextProvider(props) {
         newListCounter: 0,
         listNameActive: false,
         itemActive: false,
-        listMarkedForDeletion: null
+        listMarkedForDeletion: null,
+        searchCriteria: ''
     });
     const history = useHistory();
 
@@ -69,7 +66,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: ''
                 });
             }
             // STOP EDITING THE CURRENT LIST
@@ -81,7 +79,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: ''
                 })
             }
             // CREATE A NEW LIST
@@ -93,7 +92,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter + 1,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: ''
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -105,7 +105,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: ''
                 });
             }
 
@@ -117,7 +118,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: payload.searchCriteria
                 })
             }
 
@@ -130,7 +132,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: payload
+                    listMarkedForDeletion: payload,
+                    searchCriteria: store.searchCriteria
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -142,7 +145,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: store.searchCriteria
                 });
             }
             // UPDATE A LIST
@@ -154,7 +158,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: store.searchCriteria
                 });
             }
             // START EDITING A LIST ITEM
@@ -166,7 +171,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: true,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: ''
                 });
             }
             // START EDITING A LIST NAME
@@ -178,7 +184,8 @@ function GlobalStoreContextProvider(props) {
                     newListCounter: store.newListCounter,
                     isListNameEditActive: true,
                     isItemEditActive: false,
-                    listMarkedForDeletion: null
+                    listMarkedForDeletion: null,
+                    searchCriteria: store.searchCriteria
                 });
             }
             default:
@@ -225,18 +232,15 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST,
             payload: {}
         });
-        
-        tps.clearAllTransactions();
         history.push("/");
     }
 
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
         let newListName = "Untitled" + store.newListCounter;
-        const response = await api.createTop5List(newListName, ["?", "?", "?", "?", "?"], auth.user.email);
-        console.log("createNewList response: " + response);
+        const response = await api.createTop5List(newListName, ["?", "?", "?", "?", "?"], auth.user.email, auth.user.userName);
+
         if (response.status === 201) {
-            tps.clearAllTransactions();
             let newList = response.data.top5List;
             storeReducer({
                 type: GlobalStoreActionType.CREATE_NEW_LIST,
@@ -277,7 +281,8 @@ function GlobalStoreContextProvider(props) {
                 type: GlobalStoreActionType.LOAD_LISTS,
                 payload: {
                     listsInfo: listsInfo,
-                    listsCollectionType: "PERSONAL"
+                    listsCollectionType: "PERSONAL",
+                    searchCriteria: keyword
                 }
 
             })
@@ -293,7 +298,8 @@ function GlobalStoreContextProvider(props) {
                 type: GlobalStoreActionType.LOAD_LISTS,
                 payload: {
                     listsInfo: listsInfo,
-                    listsCollectionType: "ALL_LISTS"
+                    listsCollectionType: "ALL_LISTS",
+                    searchCriteria: keyword
                 }
 
             })
@@ -309,7 +315,8 @@ function GlobalStoreContextProvider(props) {
                 type: GlobalStoreActionType.LOAD_LISTS,
                 payload: {
                     listsInfo: listsInfo,
-                    listsCollectionType: "OTHER_USER"
+                    listsCollectionType: "OTHER_USER",
+                    searchCriteria: username
                 }
 
             })
@@ -375,39 +382,6 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.addMoveItemTransaction = function (start, end) {
-        let transaction = new MoveItem_Transaction(store, start, end);
-        tps.addTransaction(transaction);
-    }
-
-    store.addUpdateItemTransaction = function (index, newText) {
-        let oldText = store.currentList.items[index];
-        let transaction = new UpdateItem_Transaction(store, index, oldText, newText);
-        tps.addTransaction(transaction);
-    }
-
-    store.moveItem = function (start, end) {
-        start -= 1;
-        end -= 1;
-        if (start < end) {
-            let temp = store.currentList.items[start];
-            for (let i = start; i < end; i++) {
-                store.currentList.items[i] = store.currentList.items[i + 1];
-            }
-            store.currentList.items[end] = temp;
-        }
-        else if (start > end) {
-            let temp = store.currentList.items[start];
-            for (let i = start; i > end; i--) {
-                store.currentList.items[i] = store.currentList.items[i - 1];
-            }
-            store.currentList.items[end] = temp;
-        }
-
-        // NOW MAKE IT OFFICIAL
-        store.updateCurrentList();
-    }
-
     store.updateItem = function (index, newItem) {
         store.currentList.items[index] = newItem;
         store.updateCurrentList();
@@ -421,22 +395,6 @@ function GlobalStoreContextProvider(props) {
                 payload: store.currentList
             });
         }
-    }
-
-    store.undo = function () {
-        tps.undoTransaction();
-    }
-
-    store.redo = function () {
-        tps.doTransaction();
-    }
-
-    store.canUndo = function() {
-        return tps.hasTransactionToUndo();
-    }
-
-    store.canRedo = function() {
-        return tps.hasTransactionToRedo();
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME

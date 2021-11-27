@@ -31,19 +31,23 @@ getLoggedIn = async (req, res) => {
 
 loginUser = async (req, res) => {
     try {
+        
         const { email, password } = req.body;
+
+        console.log(email)
 
         if (!email || !password) {
             return res
-                .status(400)
-                .json({ errorMessage: "Please enter all required fields." });
+                .status(200)
+                .json({ success: false, errorMessage: "Please enter all required fields." });
         }
 
         const existingUser = await User.findOne({ email: email });
         if (!existingUser) {
             return res
-                .status(401)
+                .status(200)
                 .json({
+                    success: false,
                     errorMessage: "Wrong email or password provided."
                 })
         }
@@ -51,14 +55,17 @@ loginUser = async (req, res) => {
         if (!passwordCorrect) {
             console.log("Incorrect password");
             return res
-                .status(401)
+                .status(200)
                 .json({
+                    success: false,
                     errorMessage: "Wrong email or password provided."
                 })
         }
 
         // LOGIN THE USER
         const token = auth.signToken(existingUser._id);
+
+        console.log(token)
 
         res.cookie("token", token, {
             httpOnly: true,
@@ -107,33 +114,45 @@ logoutUser = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, passwordVerify } = req.body;
-        if (!firstName || !lastName || !email || !password || !passwordVerify) {
+        const { firstName, lastName, userName, email, password, passwordVerify } = req.body;
+        if (!firstName || !lastName || !userName || !email || !password || !passwordVerify) {
             return res
-                .status(400)
-                .json({ errorMessage: "Please enter all required fields." });
+                .status(200)
+                .json({ success: false, errorMessage: "Please enter all required fields." });
         }
         if (password.length < 8) {
             return res
-                .status(400)
+                .status(200)
                 .json({
+                    success: false,
                     errorMessage: "Please enter a password of at least 8 characters."
                 });
         }
         if (password !== passwordVerify) {
             return res
-                .status(400)
+                .status(200)
                 .json({
+                    success: false,
                     errorMessage: "Please enter the same password twice."
                 })
         }
-        const existingUser = await User.findOne({ email: email });
+        let existingUser = await User.findOne({ email: email });
         if (existingUser) {
             return res
-                .status(400)
+                .status(200)
                 .json({
                     success: false,
                     errorMessage: "An account with this email address already exists."
+                })
+        }
+
+        existingUser = await User.findOne({ userName: userName });
+        if (existingUser) {
+            return res
+                .status(200)
+                .json({
+                    success: false,
+                    errorMessage: "An account with this username already exists."
                 })
         }
 
@@ -142,7 +161,7 @@ registerUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            firstName, lastName, email, passwordHash
+            firstName, lastName, userName, email, passwordHash
         });
         const savedUser = await newUser.save();
 
@@ -158,6 +177,7 @@ registerUser = async (req, res) => {
             user: {
                 firstName: savedUser.firstName,
                 lastName: savedUser.lastName,  
+                userName: savedUser.userName,
                 email: savedUser.email              
             }
         })

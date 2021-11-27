@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import AuthContext from '../auth'
 
 import Copyright from './Copyright'
@@ -13,11 +13,16 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
+import Modal from '@mui/material/Modal';
+import Alert from '@mui/material/Alert'
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
+
+    const [ isModalOpen, setIsModalOpen ] = useState(true)
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -27,11 +32,47 @@ export default function LoginScreen() {
             formData.get('password')
         );
 
+        setIsModalOpen(true);
     };
+
+    const handleCloseModal = (event) => {
+        event.stopPropagation();
+        auth.closeErrorMessage();
+        setIsModalOpen(false)
+    }
+
+    let modal = ""
+    if(auth.isWrongCredentials){
+        let errorMessage = auth.wrongCredentials
+
+
+        modal = <Modal
+                    open = {isModalOpen}
+                    onClose={handleCloseModal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >   
+                    <Box sx = 
+                        {{position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        border: '2px solid #000',
+                        boxShadow: 24,
+                        p: 4,}}
+                        >
+                        <Alert severity="warning">{errorMessage}</Alert>
+                        <Button variant="outlined" onClick = {handleCloseModal}>OK</Button>
+                    </Box>
+                </Modal>
+    }
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
             <CssBaseline />
+            {modal}
             <Grid
                 item
                 xs={false}

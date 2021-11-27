@@ -5,6 +5,9 @@ import NewEditToolbar from './NewEditToolbar'
 import NewListCard from './NewListCard'
 import MUIDeleteModal from './MUIDeleteModal'
 
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 
 export default function NewHomeScreen(){
@@ -15,15 +18,25 @@ export default function NewHomeScreen(){
         store.loadIdNamePairs();
     }, []);
 
+    function handleCreateList(event){
+        store.createNewList();
+    }
+
     let editToolbar = "";
     if(auth.user || auth.isGuest){
         editToolbar = <NewEditToolbar/>
     }
 
+    let bottomText = "Your Lists";
+
+    if(store.listsCollectionType === 'ALL_LISTS'){
+         
+    }
+
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%' }}>
+            <List sx={{ width: '90%', left: '5%'}}>
             {
                 store.listsInfo.map((listInfo) => (
                     <NewListCard
@@ -34,15 +47,29 @@ export default function NewHomeScreen(){
                 ))
             }
             </List>;
+
+
     }
 
     return (
         <div>
             {editToolbar}
             <div>
-                {
-                    listCard
-                }
+                <div style = {{height: "80vh"}}>
+                    {
+                        listCard
+                    }
+                </div>
+                <div style= {{ display: "flex", width: "100%", paddingLeft: "40%"}}>
+                    <IconButton
+                        onClick = {handleCreateList}>
+                            <AddIcon sx = {{fontSize: "54px"}}/>
+                    </IconButton>   
+                    <Typography variant = "h4" sx = {{paddingTop: "1%"}}>
+                        {bottomText}
+                    </Typography> 
+                </div>
+
                 <MUIDeleteModal />
             </div>
 
