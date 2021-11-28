@@ -30,7 +30,25 @@ export default function NewHomeScreen(){
     let bottomText = "Your Lists";
 
     if(store.listsCollectionType === 'ALL_LISTS'){
-         
+        if(store.searchCriteria !== ''){
+            bottomText = store.searchCriteria + " Lists";
+        }
+        else{
+            bottomText = "All Lists";
+        }
+    }
+
+    else if(store.listsCollectionType === 'OTHER_USER'){
+        bottomText = store.searchCriteria + " Lists";
+    }
+
+    else if(store.listsCollectionType === 'COMMUNITY_LISTS'){
+        if(store.searchCriteria !== ''){
+            bottomText = store.searchCriteria + " Community Lists";
+        }
+        else{
+            bottomText = "Community Lists";
+        }
     }
 
     let listCard = "";

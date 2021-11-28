@@ -4,6 +4,7 @@ const User = require('../models/user-model');
 
 createTop5List = (req, res) => {
     const body = req.body;
+    console.log(body);
     if (!body) {
         return res.status(400).json({
             errorMessage: 'Improperly formatted request',
