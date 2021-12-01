@@ -73,7 +73,7 @@ export default function NewHomeScreen(){
         <div>
             {editToolbar}
             <div>
-                <div style = {{height: "80vh"}}>
+                <div style = {{height: "75vh", overflow: "scroll"}}>
                     {
                         listCard
                     }

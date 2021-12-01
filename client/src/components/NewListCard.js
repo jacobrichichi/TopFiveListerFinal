@@ -3,7 +3,9 @@ import { GlobalStoreContext } from '../store'
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -27,8 +29,8 @@ export default function ListCard(props) {
         }
     }
 
-    function toggleEdit(event){
-
+    const handleStartEdit = (event) => {
+        store.openListForEditing(listInfo._id)
     }
 
     const handleLike = (event) => {
@@ -40,7 +42,7 @@ export default function ListCard(props) {
     }
 
     const handleDelete = (event) => {
-
+        store.markListForDeletion(listInfo._id)
     }
 
     const handleExpand = (event) => {
@@ -50,13 +52,13 @@ export default function ListCard(props) {
     let publishDateOrEdit = ""
     let backgroundColor = ""
 
-    if(listInfo.publishDate){
+    if(listInfo.isPublished){
         publishDateOrEdit = <Typography variant = "subtitle1">Published: {listInfo.publishDate.toString().split('T')[0]}</Typography>
         backgroundColor = "white"
     }
     else{
-        publishDateOrEdit = <Typography variant = "h6">Edit</Typography>
-        backgroundColor = "gray"
+        publishDateOrEdit = <Button onClick = {handleStartEdit}>Edit</Button>
+        backgroundColor = "#b5b5b5"
     }
 
     let openedListDetails = ""
@@ -66,7 +68,7 @@ export default function ListCard(props) {
     }
 
     return(
-        <div style ={{paddingTop: "16px"}}>
+        <Box sx ={{paddingTop: "16px"}}>
             <Box 
                 backgroundColor = {backgroundColor}
                 sx = {{border: '2px solid black', borderRadius: "15px" }}
@@ -144,7 +146,7 @@ export default function ListCard(props) {
 
                 </Grid>
             </Box>
-        </div>
+        </Box>
     )
 
 

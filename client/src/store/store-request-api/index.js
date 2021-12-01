@@ -47,6 +47,10 @@ export const updateTop5ListById = (id, top5List) => {
     })
 }
 
+export const publishTop5ListById = (id) => {
+    return api.post(`/top5list/${id}`)
+}
+
 const apis = {
     createTop5List,
     deleteTop5ListById,
@@ -56,7 +60,8 @@ const apis = {
     getPersonalLists,
     getAllLists,
     getOtherUsersLists,
-    getCommunityLists
+    getCommunityLists,
+    publishTop5ListById
 }
 
 export default apis

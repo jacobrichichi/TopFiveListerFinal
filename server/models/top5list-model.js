@@ -13,6 +13,7 @@ const Top5ListSchema = new Schema(
         views: { type: Number, required: true },
         comments: [{type: ObjectId, ref: 'Comment'}],
         publishDate: { type: Date, required: true },
+        isPublished: { type: Boolean, required: true },
         lastEditDate: { type: Date, required: true },
 
     },

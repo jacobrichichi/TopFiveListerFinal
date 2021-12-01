@@ -13,5 +13,6 @@ router.post('/otheruserslists', auth.verify, Top5ListController.getOtherUsersLis
 router.post('/communitylists', auth.verify, Top5ListController.getCommunityLists)
 router.get('/top5lists', auth.verify, Top5ListController.getTop5Lists)
 router.put('/top5list/:id', auth.verify, Top5ListController.updateTop5List)
+router.post('/publishTop5List/:id', auth.verify, Top5ListController.publishTop5List)
 
 module.exports = router
