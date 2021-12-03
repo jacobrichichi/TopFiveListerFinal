@@ -48,7 +48,39 @@ export const updateTop5ListById = (id, top5List) => {
 }
 
 export const publishTop5ListById = (id) => {
-    return api.post(`/top5list/${id}`)
+    return api.post(`/publishTop5list/${id}`)
+}
+
+export const addNewComment = (comment, id) => {
+    return api.post(`/addcomment/${id}`, {content: comment})
+}
+
+export const addNewCommunityComment = (comment, id) => {
+    return api.post(`/addcommunitycomment/${id}`, {content: comment})
+}
+
+export const getComments = (id) => {
+    return api.post(`/getcomments/${id}`)
+}
+
+export const getCommunityListRefs = (id) => {
+    return api.post(`/getCommunityListRefs/${id}`)
+}
+
+export const addOrRemoveLike = (id) => {
+    return api.post(`/addOrRemoveLike/${id}`)
+}
+
+export const addOrRemoveDislike = (id) => {
+    return api.post(`/addOrRemoveDislike/${id}`)
+}
+
+export const addOrRemoveLikeCommunity = (id) => {
+    return api.post(`/addOrRemoveLikeCommunity/${id}`)
+}
+
+export const addOrRemoveDislikeCommunity = (id) => {
+    return api.post(`/addOrRemoveDislikeCommunity/${id}`)
 }
 
 const apis = {
@@ -61,7 +93,15 @@ const apis = {
     getAllLists,
     getOtherUsersLists,
     getCommunityLists,
-    publishTop5ListById
+    publishTop5ListById,
+    addNewComment,
+    addNewCommunityComment,
+    getComments,
+    getCommunityListRefs,
+    addOrRemoveLike,
+    addOrRemoveDislike,
+    addOrRemoveLikeCommunity,
+    addOrRemoveDislikeCommunity
 }
 
 export default apis

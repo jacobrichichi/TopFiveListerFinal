@@ -29,7 +29,8 @@ export const GlobalStoreActionType = {
     SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
     CLOSE_CURRENT_LIST_FOR_EDITING: "CLOSE_CURRENT_LIST_FOR_EDITING",
-    CLOSE_CURRENT_LIST_FOR_VIEWING: "CLOSE_CURRENT_LIST_FOR_VIEWING"
+    CLOSE_CURRENT_LIST_FOR_VIEWING: "CLOSE_CURRENT_LIST_FOR_VIEWING",
+    UPDATE_LISTSINFO: "UPDATE_LISTSINFO"
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -217,20 +218,24 @@ function GlobalStoreContextProvider(props) {
             }
 
             // START EDITING A LIST ITEM
-            case GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE: {
+            
+            //UPDATE LIST THAT IS NOT CURRENTLIST
+            case GlobalStoreActionType.UPDATE_LISTSINFO: {
                 return setStore({
-                    listsInfo: store.listsInfo,
+                    listsInfo: payload,
                     listsCollectionType: store.listsCollectionType,
                     currentList: store.currentList,
-                    inWorkspace: true,
+                    inWorkspace: store.inWorkspace,
                     newListCounter: store.newListCounter,
-                    isListNameEditActive: false,
-                    isItemEditActive: payload.isItemEditActive,
-                    listMarkedForDeletion: null,
-                    searchCriteria: '',
-                    canBePublished: payload.canBePublished
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    searchCriteria: store.searchCriteria,
+                    canBePublished: store.canBePublished
                 });
             }
+
+
 
             default:
                 return store;
@@ -320,6 +325,7 @@ function GlobalStoreContextProvider(props) {
         // First simulate the event that the user saved the list before publishing in case they did not
         store.saveList(title);
 
+        console.log(store.currentList._id)
         let response = await api.publishTop5ListById(store.currentList._id)
 
 
@@ -394,8 +400,20 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
-    store.getCommunityLists = async function(keyword){
+    store.getCommunityLists =  async function(keyword){
         const response = await api.getCommunityLists(keyword);
+        if(response.status === 200){
+            let listsInfo = response.data.listsInfo
+
+            storeReducer({
+                type: GlobalStoreActionType.LOAD_LISTS,
+                payload: {
+                    listsInfo: listsInfo,
+                    listsCollectionType: "COMMUNITY",
+                    searchCriteria: keyword
+                }
+            })
+        }
     }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
@@ -506,6 +524,166 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE,
             payload: { isItemEditActive: editActive, canBePublished: canBePublished }
         });
+    }
+
+    store.addNewComment = async function(comment, listInfo){
+
+        let response = {}
+
+        if(store.listsCollectionType === 'COMMUNITY'){
+            response = await api.addNewCommunityComment(comment, listInfo._id)
+        }
+
+        else{
+            response = await api.addNewComment(comment, listInfo._id)
+        }
+
+        if(response.status === 200){
+            const comment = response.data.comment
+
+            let listsInfo = store.listsInfo
+
+            for(let i = 0; i<listsInfo.length; i++){
+                if(listsInfo[i]._id === listInfo._id){
+                    listsInfo[i].comments.push(comment)
+                    break;
+                }
+            }
+
+
+            storeReducer({
+                type: GlobalStoreActionType.UPDATE_LISTSINFO,
+                payload: listsInfo
+            })
+
+        }
+    }
+
+    store.expandList = async function(listId) {
+        let response = {}
+
+        if(store.listsCollectionType === 'COMMUNITY'){
+            response = await api.getCommunityListRefs(listId)
+            if(response.status === 200){
+                let listsInfo = store.listsInfo
+
+                for(let i = 0; i<listsInfo.length; i++){
+                    if(listsInfo[i]._id === listId){
+                        listsInfo[i].comments = response.data.comments
+                        listsInfo[i].items = response.data.items
+                        break
+                    }
+                }
+
+                storeReducer({
+                    type: GlobalStoreActionType.UPDATE_LISTSINFO,
+                    payload: listsInfo
+                })
+
+            }
+
+        }
+
+        else{
+            response = await api.getComments(listId)
+
+
+            if(response.status === 200){
+                let listsInfo = store.listsInfo
+
+                for(let i = 0; i<listsInfo.length; i++){
+                    if(listsInfo[i]._id === listId){
+                        listsInfo[i].comments = response.data.comments
+                        break
+                    }
+                }
+
+                storeReducer({
+                    type: GlobalStoreActionType.UPDATE_LISTSINFO,
+                    payload: listsInfo
+                })
+            }
+        }
+    }
+
+    store.likeList = async function(listId) {
+        let response = {}
+
+        if(store.listsCollectionType==='COMMUNITY'){
+            response = await api.addOrRemoveLikeCommunity(listId)
+        }
+
+        else{
+            response = await api.addOrRemoveLike(listId)
+        }
+
+        if(response.status === 200){
+            let listsInfo = store.listsInfo
+            if(response.data.added){
+                for(let i = 0; i<listsInfo.length; i++){
+                    if(listsInfo[i]._id == listId){
+                        listsInfo[i].likes += 1
+                        listsInfo[i].liked = true
+                        break
+                    }
+                }
+            }
+
+            else{
+                for(let i = 0; i<listsInfo.length; i++){
+                    if(listsInfo[i]._id == listId){
+                        listsInfo[i].likes -= 1
+                        listsInfo[i].liked = false
+                        break
+                    }
+                }
+            }
+
+            storeReducer({
+                type: GlobalStoreActionType.UPDATE_LISTSINFO,
+                payload: listsInfo
+            })
+        }
+    }
+
+    store.dislikeList = async function(listId) {
+        let response = {}
+
+        if(store.listsCollectionType==='COMMUNITY'){
+            response = await api.addOrRemoveDislikeCommunity(listId)
+        }
+
+        else{
+            response = await api.addOrRemoveDislike(listId)
+        }
+
+        if(response.status === 200){
+            let listsInfo = store.listsInfo
+            if(response.data.added){
+                for(let i = 0; i<listsInfo.length; i++){
+                    if(listsInfo[i]._id == listId){
+                        listsInfo[i].dislikes += 1
+                        listsInfo[i].disliked = true
+                        break
+                    }
+                }
+            }
+
+            else{
+                for(let i = 0; i<listsInfo.length; i++){
+                    if(listsInfo[i]._id == listId){
+                        listsInfo[i].dislikes -= 1
+                        listsInfo[i].disliked = false
+                        break
+                    }
+                }
+            }
+
+            storeReducer({
+                type: GlobalStoreActionType.UPDATE_LISTSINFO,
+                payload: listsInfo
+            })
+        }
     }
 
     return (

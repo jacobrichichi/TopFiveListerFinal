@@ -11,8 +11,8 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 
 export default function NewAppBanner() {
-    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext)
     const [anchorEl, setAnchorEl] = useState(null);
     const isMenuOpen = Boolean(anchorEl);
 

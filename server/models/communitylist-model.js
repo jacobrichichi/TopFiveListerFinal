@@ -5,7 +5,7 @@ const ObjectId = Schema.Types.ObjectId
 const CommunityListSchema = new Schema(
     {
         name: { type: String, required: true },
-        items: { type: [{String, Number}], required: true },
+        items: [{type: ObjectId, ref: 'CommunityItem'}],
         likes: { type: Number, required: true},
         dislikes: { type: Number, required: true },
         views: { type: Number, required: true },

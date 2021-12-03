@@ -43,11 +43,12 @@ function NewWorkspaceScreen() {
     }
 
     function handlePublish(event) {
+        console.log('handlePublish')
         if(title === ""){
-            store.saveList(store.currentList.name)
+            store.publishList(store.currentList.name)
         }
         else{
-            store.saveList(title);
+            store.publishList(title);
         }
     }
 
@@ -110,7 +111,7 @@ function NewWorkspaceScreen() {
                     </Grid>
 
                     <Grid item xs = {3}>
-                        <Button variant = "outlined" disabled = {publishDisabled} sx = {{width: "100%", height: "100%", textTransform: "none" }}>
+                        <Button variant = "outlined" onClick = {handlePublish} disabled = {publishDisabled} sx = {{width: "100%", height: "100%", textTransform: "none" }}>
                             <Typography variant = "h3" sx = {{color: "black"}}>
                                 Publish
                             </Typography>

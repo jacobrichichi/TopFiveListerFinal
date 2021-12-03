@@ -10,6 +10,8 @@ const UserSchema = new Schema(
         userName: { type: String, required: true},
         passwordHash: { type: String, required: true },
         top5Lists: [{type: ObjectId, ref: 'Top5List'}],
+        likes: [{ type: ObjectId, ref: 'Top5List'}],
+        dislikes: [{ type: ObjectId, ref: 'Top5List'}]
         
     },
     { timestamps: true },
