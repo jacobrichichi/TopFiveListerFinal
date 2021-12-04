@@ -46,35 +46,33 @@ function Top5Item(props) {
 
     let itemClass = "top5-item";
 
-    let itemNameBox = <Box 
-                    sx = 
-                    {{borderRadius: "10px",
-                    backgroundColor: "#bfa739", 
-                    width: "100%",
-                    marginLeft: "20px",
-                    padding: "10px"
-                    }}
-                    onDoubleClick = {handleDoubleClick}>
-                        {props.text}
-                    </Box>
+    let itemBoxContents =   <Box 
+                                sx = 
+                                {{borderRadius: "10px",
+                                backgroundColor: "#bfa739", 
+                                width: "100%",
+                                marginLeft: "20px",
+                                padding: "10px"
+                                }}
+                                onDoubleClick = {handleDoubleClick}>
+                                    {props.text}
+                            </Box>
 
     if (editActive) {
-        itemNameBox =    
+        itemBoxContents = 
             <TextField
-                margin="normal"
                 required
                 fullWidth
                 id={"item-" + (index+1)}
-                label={"Item #" + (index+1)}
                 name="item"
                 autoComplete="Top 5 List Item"
-                className='top5-item'
                 onKeyPress={handleKeyPress}
                 onChange={handleUpdateText}
                 defaultValue={props.text}
-                inputProps={{style: {fontSize: 48}}}
-                InputLabelProps={{style: {fontSize: 24}}}
+                inputProps={{style: {fontSize: 39}}}
                 autoFocus
+                size = "small"
+                sx = {{height: "8vh", borderRadius: "10px", backgroundColor: "white", marginLeft: '1.5%'}}
             />
     }
     return (
@@ -92,8 +90,8 @@ function Top5Item(props) {
                         {index + 1}.
                     </Typography>
                 </Box>
-                
-                {itemNameBox}
+
+                {itemBoxContents}
 
             </ListItem>
     );

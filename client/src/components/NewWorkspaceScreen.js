@@ -56,6 +56,19 @@ function NewWorkspaceScreen() {
         setPublishDisabled(!store.canBePublished)
     }
 
+    let publishButton = <Button variant = "outlined" onClick = {handlePublish} disabled = {true} sx = {{width: "100%", height: "100%", textTransform: "none" }}>
+                            <Typography variant = "h3" sx = {{color: "black"}}>
+                                Publish
+                            </Typography>
+                        </Button>
+    if(store.canBePublished){
+        publishButton = <Button variant = "outlined" sx = {{width: "100%", height: "100%", textTransform: "none" }}>
+                            <Typography variant = "h3" sx = {{color: "black"}}>
+                                Publish
+                            </Typography>
+                        </Button>
+    }                
+
     let editItems = "";
     if (store.currentList) {
         editItems = 
@@ -111,11 +124,7 @@ function NewWorkspaceScreen() {
                     </Grid>
 
                     <Grid item xs = {3}>
-                        <Button variant = "outlined" onClick = {handlePublish} disabled = {publishDisabled} sx = {{width: "100%", height: "100%", textTransform: "none" }}>
-                            <Typography variant = "h3" sx = {{color: "black"}}>
-                                Publish
-                            </Typography>
-                        </Button>
+                        {publishButton}
                     </Grid>
                 </Grid>
 

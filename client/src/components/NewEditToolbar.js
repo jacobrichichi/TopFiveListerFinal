@@ -1,11 +1,14 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import AuthContext from '../auth';
+
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 
 import HomeIcon from '@mui/icons-material/Home';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -18,6 +21,8 @@ export default function NewEditToolbar(){
     const { auth } = useContext(AuthContext);
 
     const [text, setText] = useState("");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const isMenuOpen = Boolean(anchorEl);
 
     const handlePersonalLists = (event) => {
         store.getPersonalLists("");
@@ -35,8 +40,34 @@ export default function NewEditToolbar(){
         store.getCommunityLists("");
     }
 
-    const handleSortBy = (event) => {
-        
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    }
+
+    const handleSortByDateOldest = (event) => {
+        store.sortByDateOldest();
+        setAnchorEl(null);
+    }
+
+    const handleSortByDateNewest = (event) => {
+        store.sortByDateNewest();
+        setAnchorEl(null);
+    }
+    const handleSortByViews = (event) => {
+        store.sortByViews();
+        setAnchorEl(null);
+    }
+    const handleSortByLikes = (event) => {
+        store.sortByLikes();
+        setAnchorEl(null);
+    }
+    const handleSortByDislikes = (event) => {
+        store.sortByDislikes();
+        setAnchorEl(null);
     }
 
     const handleKeyPress = (event) => {
@@ -60,6 +91,30 @@ export default function NewEditToolbar(){
     const handleUpdateText = (event) => {
         setText(event.target.value);
     }
+
+    let sortMenu = <Menu
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        id= 'primary-search-account-menu'
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={isMenuOpen}
+                        onClose={handleMenuClose}
+                    >
+                        <MenuItem onClick={handleSortByDateOldest}>Oldest</MenuItem>
+                        <MenuItem onClick={handleSortByDateNewest}>Newest</MenuItem>
+                        <MenuItem onClick={handleSortByViews}>Views</MenuItem>
+                        <MenuItem onClick={handleSortByLikes}>Likes</MenuItem>
+                        <MenuItem onClick={handleSortByDislikes}>Dislikes</MenuItem>
+                    </Menu>
+
+
 
     let editStatus = false;
     if (store.isListNameEditActive) {
@@ -125,11 +180,13 @@ export default function NewEditToolbar(){
                 <Grid item xs = {4}>
                     <IconButton 
                         disabled={editStatus}
-                        onClick={handleSortBy}
-                        sx = {{height: "100%"}}>
+                        onClick={handleMenuOpen}
+                        sx = {{height: "100%"}}
+                        onClick = {handleMenuOpen}>
                             <SortIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
                 </Grid>
+                {sortMenu}
             </Grid>
 
 

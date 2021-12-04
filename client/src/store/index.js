@@ -234,6 +234,20 @@ function GlobalStoreContextProvider(props) {
                     canBePublished: store.canBePublished
                 });
             }
+            case GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE: {
+                return setStore({
+                    listsInfo: store.listsInfo,
+                    listsCollectionType: store.listsCollectionType,
+                    currentList: store.currentList,
+                    inWorkspace: store.inWorkspace,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: payload.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    searchCriteria: store.searchCriteria,
+                    canBePublished: payload.canBePublished
+                });
+            }
 
 
 
@@ -684,6 +698,56 @@ function GlobalStoreContextProvider(props) {
                 payload: listsInfo
             })
         }
+    }
+
+    store.sortByDateOldest = function(){
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.publishDate < b.publishDate) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
+    }
+
+    store.sortByDateNewest = function(){
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.publishDate > b.publishDate) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
+    }
+
+    store.sortByViews = function() {
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.views < b.views) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
+    }
+
+    store.sortByLikes = function() {
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.likes < b.likes) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
+    }
+
+    store.sortByDislikes = function() {
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.dislikes < b.dislikes) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
     }
 
     return (
