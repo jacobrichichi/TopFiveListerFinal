@@ -45,7 +45,9 @@ export const registerUser = (firstName, lastName, userName, email, password, pas
         passwordVerify : passwordVerify
     })
 }
-export const loginGuest = () => api.get('/loginGuest')
+export const loginGuest = () => api.get('/loginGuest/')
+
+//export const guestStartUp = () => api.post('/guestStartUp/')
 
 const apis = {
     getLoggedIn,

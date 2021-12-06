@@ -1,8 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import api from './store-request-api'
-import MoveItem_Transaction from '../transactions/MoveItem_Transaction'
-import UpdateItem_Transaction from '../transactions/UpdateItem_Transaction'
 import AuthContext from '../auth'
 /*
     This is our global data store. Note that it uses the Flux design pattern,
@@ -31,7 +29,9 @@ export const GlobalStoreActionType = {
     CLOSE_CURRENT_LIST_FOR_EDITING: "CLOSE_CURRENT_LIST_FOR_EDITING",
     CLOSE_CURRENT_LIST_FOR_VIEWING: "CLOSE_CURRENT_LIST_FOR_VIEWING",
     UPDATE_LISTSINFO: "UPDATE_LISTSINFO",
-    SET_LIST_AND_CBP: "SET_LIST_AND_CBP"
+    SET_LIST_AND_CBP: "SET_LIST_AND_CBP",
+    SET_PUBLISH_ERROR: "SET_PUBLISH_ERROR",
+    REMOVE_PUBLISH_ERROR: "REMOVE_PUBLISH_ERROR"
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -48,7 +48,9 @@ function GlobalStoreContextProvider(props) {
         listMarkedForDeletion: null,
         searchCriteria: '',
         inWorkspace: false,
-        canBePublished: false
+        canBePublished: false,
+        isPublishError: false,
+        publishError: ""
     });
     const history = useHistory();
 
@@ -77,7 +79,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: '',
-                    canBePublished: store.canBePublished
+                    canBePublished: store.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
 
@@ -93,7 +97,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: '',
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 })
             }
             // STOP VIEWING THE CURRENT LIST
@@ -108,7 +114,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: '',
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 })
             }
             // CREATE A NEW LIST
@@ -123,7 +131,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: '',
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 })
             }
             // GET ALL THE LISTS SO WE CAN PRESENT THEM
@@ -138,7 +148,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: '',
-                    canBePublished: store.canBePublished
+                    canBePublished: store.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
 
@@ -153,7 +165,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: payload.searchCriteria,
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 })
             }
 
@@ -169,7 +183,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: payload,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
             // PREPARE TO DELETE A LIST
@@ -184,7 +200,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
             // UPDATE A LIST
@@ -199,7 +217,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: store.canBePublished
+                    canBePublished: store.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
 
@@ -215,7 +235,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: payload.canBePublished
+                    canBePublished: payload.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
 
@@ -230,7 +252,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: false
+                    canBePublished: false,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
 
@@ -248,7 +272,9 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: store.isItemEditActive,
                     listMarkedForDeletion: store.listMarkedForDeletion,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: store.canBePublished
+                    canBePublished: store.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
             case GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE: {
@@ -262,7 +288,44 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: payload.isItemEditActive,
                     listMarkedForDeletion: store.listMarkedForDeletion,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: store.canBePublished
+                    canBePublished: store.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
+                });
+                
+            }
+
+            case GlobalStoreActionType.SET_PUBLISH_ERROR: {
+                return setStore({
+                    listsInfo: store.listsInfo,
+                    listsCollectionType: store.listsCollectionType,
+                    currentList: store.currentList,
+                    inWorkspace: store.inWorkspace,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: payload.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    searchCriteria: store.searchCriteria,
+                    canBePublished: store.canBePublished,
+                    isPublishError: true,
+                    publishError: payload.publishError
+                });
+            }
+
+            case GlobalStoreActionType.REMOVE_PUBLISH_ERROR: {
+                return setStore({
+                    listsInfo: store.listsInfo,
+                    listsCollectionType: store.listsCollectionType,
+                    currentList: store.currentList,
+                    inWorkspace: store.inWorkspace,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: store.isListNameEditActive,
+                    isItemEditActive: store.isItemEditActive,
+                    listMarkedForDeletion: store.listMarkedForDeletion,
+                    searchCriteria: store.searchCriteria,
+                    canBePublished: store.canBePublished,
+                    isPublishError: false,
+                    publishError: ""
                 });
             }
 
@@ -302,7 +365,7 @@ function GlobalStoreContextProvider(props) {
     store.closeEditingList = function () {
         storeReducer({
             type: GlobalStoreActionType.CLOSE_CURRENT_LIST_FOR_EDITING,
-            payload: {}
+            payload: { listsInfo: store.listsInfo }
         });
         history.push("/");
     }
@@ -363,15 +426,24 @@ function GlobalStoreContextProvider(props) {
 
         if(response.status === 200){
 
-            response = await api.getPersonalLists('')
+            if(response.data.success){
+                response = await api.getPersonalLists('')
 
-            if(response.status === 200){
+                if(response.status === 200){
+                    storeReducer({
+                        type: GlobalStoreActionType.CLOSE_CURRENT_LIST_FOR_EDITING,
+                        payload: { listsInfo: response.data.listsInfo }
+                    })
+    
+                    history.push("/");
+                }
+            }
+
+            else{
                 storeReducer({
-                    type: GlobalStoreActionType.CLOSE_CURRENT_LIST_FOR_EDITING,
-                    payload: { listsInfo: response.data.listsInfo }
+                    type: GlobalStoreActionType.SET_PUBLISH_ERROR,
+                    payload: { publishError: response.data.errorMessage }
                 })
-
-                history.push("/");
             }
 
 
@@ -379,6 +451,13 @@ function GlobalStoreContextProvider(props) {
 
 
 
+    }
+
+    store.removePublishError = function(){
+        storeReducer({
+            type: GlobalStoreActionType.REMOVE_PUBLISH_ERROR,
+            payload: { }
+        })
     }
 
     // THIS FUNCTION LOADS ALL THE ID, NAME PAIRS SO WE CAN LIST ALL THE LISTS
@@ -537,6 +616,12 @@ function GlobalStoreContextProvider(props) {
         for(let i = 0; i<list.items.length; i++){
             if(list.items[i].length==0 || list.items[i] === "?"){
                 return false
+            }
+
+            for(let j = i+1; j< list.items.length; j++){
+                if(list.items[i] === list.items[j]){
+                    return false
+                }
             }
         }
         return true

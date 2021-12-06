@@ -131,13 +131,19 @@ export default function NewEditToolbar(){
         disabled = true;
     }
 
+    let homeDisabled  = disabled;
+
+    if(auth.isGuest){
+        homeDisabled = true
+    }
+
 
     return (
         <div>
             <Grid container spacing = {0} columns = {96}>
                 <Grid item xs = {5}>
                     <IconButton 
-                        disabled={disabled}
+                        disabled={homeDisabled}
                         onClick={handlePersonalLists}>
                             <HomeIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>

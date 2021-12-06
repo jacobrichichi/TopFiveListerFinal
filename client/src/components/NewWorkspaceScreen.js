@@ -5,10 +5,13 @@ import List from '@mui/material/List';
 
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import { GlobalStoreContext } from '../store/index.js'
@@ -24,6 +27,8 @@ function NewWorkspaceScreen() {
     const [publishDisabled, setPublishDisabled] = useState(!store.canBePublished)
     const [title, setTitle] = useState("")
     const [ isTitleEditActive, setIsTitleEditActive ] = useState(false)
+    const [ isModalOpen, setIsModalOpen ] = useState(true)
+
 
     function handleUpdateTitle(event) {
         setTitle(event.target.value);
@@ -70,12 +75,49 @@ function NewWorkspaceScreen() {
             store.publishList(title);
         }
 
+        setIsModalOpen(true)
         
     }
 
     const reloadPublish = () => {
         setPublishDisabled(!store.canBePublished)
     }
+
+
+    const handleCloseModal = (event) => {
+        event.stopPropagation();
+        store.removePublishError();
+        setIsModalOpen(false)
+    }
+
+    let modal = ""
+    if(store.isPublishError){
+        let errorMessage = store.publishError
+
+
+        modal = <Modal
+                    open = {isModalOpen}
+                    onClose={handleCloseModal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >   
+                    <Box sx = 
+                        {{position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        border: '2px solid #000',
+                        boxShadow: 24,
+                        p: 4,}}
+                        >
+                        <Alert severity="warning">{errorMessage}</Alert>
+                        <Button variant="outlined" onClick = {handleCloseModal}>OK</Button>
+                    </Box>
+                </Modal>
+    }
+
 
     let publishButton = <Button variant = "outlined" onClick = {handlePublish} disabled = {true} sx = {{width: "100%", height: "100%", textTransform: "none" }}>
                             <Typography variant = "h3" sx = {{color: "black"}}>
@@ -169,7 +211,7 @@ function NewWorkspaceScreen() {
                         Your List
                     </Typography> 
                 </div>
-
+            {modal}
         </div>
     )
 }

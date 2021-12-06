@@ -20,9 +20,7 @@ import Typography from '@mui/material/Typography';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
-
     const [ isModalOpen, setIsModalOpen ] = useState(true)
-
 
     const handleSubmit = (event) => {
         event.preventDefault();

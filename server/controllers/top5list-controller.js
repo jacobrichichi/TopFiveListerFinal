@@ -11,6 +11,8 @@ createTop5List = (req, res) => {
             errorMessage: 'Improperly formatted request',
         })
     }
+
+    
     const listVals = {
         name: body.name,
         items: body.items,
@@ -19,7 +21,7 @@ createTop5List = (req, res) => {
         likes: 0,
         dislikes: 0,
         views: 0,
-        publishDate: new Date(),
+        publishDate: new Date('January 1, 2030 12:12:12'),
         lastEditDate: new Date(),
         isPublished: false
     }

@@ -104,25 +104,47 @@ loginUser = async (req, res) => {
     }
 }
 
+/*guestStartUp = async (req, res) => {
+    User.findOne({ userName: "Guest"}, (err, guest) => {
+        //initial DB start up, need to create a guest account
+        if(!guest){
+            let newGuestVals =  { firstName: "Guest", lastName: "Guest", userName: "Guest", email: "guest@guest.guest", passwordHash: "password"}
+            let newGuest = new User(newGuestVals)
+            newGuest.save()
+        }
+
+    })
+}*/
+
 loginGuest = async (req, res) => {
 
     //Sign token with the guest account
-    const token = auth.signToken("61acf37c1a2a0f4ef8738b91");
 
-    console.log('guestBeingMade')
-
-    res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: true
-    }).status(200).json({
-        success: true,
-        user: {
-            firstName:'Guest',
-            lastName: 'Guest',  
-            userName: "Guest",
-            email: 'guest@guest.guest'              
+    User.findOne({ email: "guest@guest.guest" }, (err, guest) => {
+        let token = {};
+        if(!guest){
+            let newGuestVals =  { firstName: "Guest", lastName: "Guest", userName: "Guest", email: "guest@guest.guest", passwordHash: "password"}
+            let newGuest = new User(newGuestVals)
+            newGuest.save()
+            token = auth.signToken(newGuest)
         }
+        else{
+            token = auth.signToken(guest)
+        }
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: true
+        }).status(200).json({
+            success: true,
+            user: {
+                firstName:'Guest',
+                lastName: 'Guest',  
+                userName: "Guest",
+                email: 'guest@guest.guest'              
+            }
+        })
     })
 }
 

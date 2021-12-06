@@ -223,6 +223,11 @@ function AuthContextProvider(props) {
         }
     }
 
+    /*auth.guestDuties = async function() {
+        const response = await api.guestStartUp();
+
+    }*/
+
     return (
         <AuthContext.Provider value={{
             auth

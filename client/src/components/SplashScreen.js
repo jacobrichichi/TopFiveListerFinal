@@ -6,14 +6,18 @@ import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 import { useContext } from 'react';
 import AuthContext from '../auth'
+import { GlobalStoreContext } from '../store/index.js'
 
 
 export default function SplashScreen() {
     const { auth } = useContext(AuthContext);
+    const { store } = useContext(GlobalStoreContext);
 
     const handleGuest = (event) => {
         console.log('component')
         auth.loginGuest();
+        store.getCommunityLists("");
+
     }
 
     return (

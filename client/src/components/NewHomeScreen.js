@@ -15,7 +15,10 @@ export default function NewHomeScreen(){
     const { auth } = useContext(AuthContext);
 
     useEffect(() => {
-        store.loadIdNamePairs();
+
+        if(!auth.isGuest){
+            store.loadIdNamePairs();
+        }
     }, []);
 
     function handleCreateList(event){
@@ -51,6 +54,12 @@ export default function NewHomeScreen(){
         }
     }
 
+    let addDisabled = false;
+
+    if(auth.isGuest){
+        addDisabled = true
+    }
+
     let listCard = "";
     if (store) {
         listCard = 
@@ -80,7 +89,7 @@ export default function NewHomeScreen(){
                 </div>
                 <div style= {{ display: "flex", width: "100%", paddingLeft: "40%"}}>
                     <IconButton
-                        onClick = {handleCreateList}>
+                        onClick = {handleCreateList} disabled = {addDisabled}>
                             <AddIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>   
                     <Typography variant = "h4" sx = {{paddingTop: "1%"}}>
