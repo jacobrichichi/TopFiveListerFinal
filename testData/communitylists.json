@@ -1,0 +1,370 @@
+[{
+  "_id": {
+    "$oid": "61ae54ec484dfc277c4a4e27"
+  },
+  "items": [
+    {
+      "$oid": "61ae54ec484dfc277c4a4e23"
+    },
+    {
+      "$oid": "61ae54ec484dfc277c4a4e22"
+    },
+    {
+      "$oid": "61ae54ec484dfc277c4a4e24"
+    },
+    {
+      "$oid": "61ae55c6484dfc277c4a4f36"
+    },
+    {
+      "$oid": "61ae55c6484dfc277c4a4f37"
+    },
+    {
+      "$oid": "61ae55c6484dfc277c4a4f38"
+    },
+    {
+      "$oid": "61ae54ec484dfc277c4a4e25"
+    },
+    {
+      "$oid": "61ae553d484dfc277c4a4ea2"
+    },
+    {
+      "$oid": "61ae54ec484dfc277c4a4e26"
+    },
+    {
+      "$oid": "61ae553d484dfc277c4a4ea3"
+    }
+  ],
+  "comments": [
+    {
+      "$oid": "61ae58cb484dfc277c4a5166"
+    }
+  ],
+  "name": "Animals To Eat",
+  "likes": 1,
+  "dislikes": 0,
+  "views": 3,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:22:36.083Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:07.317Z"
+  },
+  "__v": 3
+},{
+  "_id": {
+    "$oid": "61ae54f3484dfc277c4a4e50"
+  },
+  "items": [
+    {
+      "$oid": "61ae54f3484dfc277c4a4e4b"
+    },
+    {
+      "$oid": "61ae54f3484dfc277c4a4e4c"
+    },
+    {
+      "$oid": "61ae54f3484dfc277c4a4e4d"
+    },
+    {
+      "$oid": "61ae54f3484dfc277c4a4e4e"
+    },
+    {
+      "$oid": "61ae54f3484dfc277c4a4e4f"
+    }
+  ],
+  "comments": [],
+  "name": "Food",
+  "likes": 0,
+  "dislikes": 1,
+  "views": 3,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:22:43.307Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:22:43.312Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:09.775Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5564484dfc277c4a4ecf"
+  },
+  "items": [
+    {
+      "$oid": "61ae5564484dfc277c4a4eca"
+    },
+    {
+      "$oid": "61ae5564484dfc277c4a4ecb"
+    },
+    {
+      "$oid": "61ae5564484dfc277c4a4ecc"
+    },
+    {
+      "$oid": "61ae5564484dfc277c4a4ecd"
+    },
+    {
+      "$oid": "61ae5564484dfc277c4a4ece"
+    }
+  ],
+  "comments": [
+    {
+      "$oid": "61ae58e3484dfc277c4a5182"
+    }
+  ],
+  "name": "Foods",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 2,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:24:36.460Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:31.859Z"
+  },
+  "__v": 1
+},{
+  "_id": {
+    "$oid": "61ae558c484dfc277c4a4efd"
+  },
+  "items": [
+    {
+      "$oid": "61ae558c484dfc277c4a4ef8"
+    },
+    {
+      "$oid": "61ae558c484dfc277c4a4ef9"
+    },
+    {
+      "$oid": "61ae558c484dfc277c4a4efb"
+    },
+    {
+      "$oid": "61ae5696484dfc277c4a4ffb"
+    },
+    {
+      "$oid": "61ae57ed484dfc277c4a50f9"
+    },
+    {
+      "$oid": "61ae577f484dfc277c4a50ba"
+    },
+    {
+      "$oid": "61ae558c484dfc277c4a4efa"
+    },
+    {
+      "$oid": "61ae5696484dfc277c4a4ffa"
+    },
+    {
+      "$oid": "61ae577f484dfc277c4a50bb"
+    },
+    {
+      "$oid": "61ae558c484dfc277c4a4efc"
+    },
+    {
+      "$oid": "61ae577f484dfc277c4a50bc"
+    }
+  ],
+  "comments": [
+    {
+      "$oid": "61ae58f3484dfc277c4a5189"
+    }
+  ],
+  "name": "Programming Languages",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 2,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:25:16.872Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:47.654Z"
+  },
+  "__v": 4
+},{
+  "_id": {
+    "$oid": "61ae55fb484dfc277c4a4f67"
+  },
+  "items": [
+    {
+      "$oid": "61ae55fb484dfc277c4a4f62"
+    },
+    {
+      "$oid": "61ae55fb484dfc277c4a4f63"
+    },
+    {
+      "$oid": "61ae55fb484dfc277c4a4f64"
+    },
+    {
+      "$oid": "61ae55fb484dfc277c4a4f65"
+    },
+    {
+      "$oid": "61ae55fb484dfc277c4a4f66"
+    }
+  ],
+  "comments": [],
+  "name": "Professional Sports Teams",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 1,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:27:07.845Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:50.152Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5634484dfc277c4a4f95"
+  },
+  "items": [
+    {
+      "$oid": "61ae5634484dfc277c4a4f90"
+    },
+    {
+      "$oid": "61ae5634484dfc277c4a4f91"
+    },
+    {
+      "$oid": "61ae5634484dfc277c4a4f92"
+    },
+    {
+      "$oid": "61ae5634484dfc277c4a4f93"
+    },
+    {
+      "$oid": "61ae5634484dfc277c4a4f94"
+    }
+  ],
+  "comments": [],
+  "name": "Games",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 1,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:28:04.064Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:53.793Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5669484dfc277c4a4fc8"
+  },
+  "items": [
+    {
+      "$oid": "61ae5669484dfc277c4a4fc3"
+    },
+    {
+      "$oid": "61ae5669484dfc277c4a4fc4"
+    },
+    {
+      "$oid": "61ae5669484dfc277c4a4fc5"
+    },
+    {
+      "$oid": "61ae5669484dfc277c4a4fc6"
+    },
+    {
+      "$oid": "61ae5669484dfc277c4a4fc7"
+    }
+  ],
+  "comments": [],
+  "name": "Countries",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 0,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:28:57.368Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae56e2484dfc277c4a5027"
+  },
+  "items": [
+    {
+      "$oid": "61ae56e2484dfc277c4a5022"
+    },
+    {
+      "$oid": "61ae56e2484dfc277c4a5023"
+    },
+    {
+      "$oid": "61ae56e2484dfc277c4a5024"
+    },
+    {
+      "$oid": "61ae56e2484dfc277c4a5025"
+    },
+    {
+      "$oid": "61ae56e2484dfc277c4a5026"
+    }
+  ],
+  "comments": [],
+  "name": "TV Shows",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 0,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:30:58.894Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae574a484dfc277c4a507e"
+  },
+  "items": [
+    {
+      "$oid": "61ae574a484dfc277c4a5079"
+    },
+    {
+      "$oid": "61ae574a484dfc277c4a507a"
+    },
+    {
+      "$oid": "61ae574a484dfc277c4a507b"
+    },
+    {
+      "$oid": "61ae574a484dfc277c4a507c"
+    },
+    {
+      "$oid": "61ae574a484dfc277c4a507d"
+    }
+  ],
+  "comments": [],
+  "name": "Animals to Eat",
+  "likes": 0,
+  "dislikes": 0,
+  "views": 1,
+  "lastEditDate": {
+    "$date": "2021-12-06T18:32:42.301Z"
+  },
+  "createdAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:40:01.548Z"
+  },
+  "__v": 0
+}]

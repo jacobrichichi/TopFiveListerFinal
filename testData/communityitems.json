@@ -1,0 +1,729 @@
+[{
+  "_id": {
+    "$oid": "61ae54ec484dfc277c4a4e22"
+  },
+  "item": "Fish",
+  "votes": 9,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54ec484dfc277c4a4e23"
+  },
+  "item": "Chicken",
+  "votes": 11,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54ec484dfc277c4a4e25"
+  },
+  "item": "Goat",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54ec484dfc277c4a4e24"
+  },
+  "item": "Lamb",
+  "votes": 8,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:23:57.534Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54ec484dfc277c4a4e26"
+  },
+  "item": "Shrimp",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:36.091Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54f3484dfc277c4a4e4b"
+  },
+  "item": "Gyro",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:43.311Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:43.311Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54f3484dfc277c4a4e4c"
+  },
+  "item": "Burgers",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:43.311Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:43.311Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54f3484dfc277c4a4e4d"
+  },
+  "item": "Ice Cream",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:43.311Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:43.311Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54f3484dfc277c4a4e4e"
+  },
+  "item": "Biryani",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:43.312Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:43.312Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae54f3484dfc277c4a4e4f"
+  },
+  "item": "Sushi",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:22:43.312Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:22:43.312Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae553d484dfc277c4a4ea2"
+  },
+  "item": "Ants",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:23:57.535Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:23:57.535Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae553d484dfc277c4a4ea3"
+  },
+  "item": "Clam",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:23:57.535Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:23:57.535Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5564484dfc277c4a4eca"
+  },
+  "item": "Gyro",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5564484dfc277c4a4ecb"
+  },
+  "item": "Tacos",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5564484dfc277c4a4ecc"
+  },
+  "item": "Pizza",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5564484dfc277c4a4ecd"
+  },
+  "item": "Ice Cream",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5564484dfc277c4a4ece"
+  },
+  "item": "Cookies",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:24:36.464Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae558c484dfc277c4a4ef8"
+  },
+  "item": "Python",
+  "votes": 17,
+  "createdAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:35:25.399Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae558c484dfc277c4a4ef9"
+  },
+  "item": "Java",
+  "votes": 10,
+  "createdAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:35:25.399Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae558c484dfc277c4a4efa"
+  },
+  "item": "Swift",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae558c484dfc277c4a4efb"
+  },
+  "item": "JavaScript",
+  "votes": 8,
+  "createdAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:35:25.399Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae558c484dfc277c4a4efc"
+  },
+  "item": "Kotlin",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:25:16.876Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55c6484dfc277c4a4f36"
+  },
+  "item": "Cow",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55c6484dfc277c4a4f37"
+  },
+  "item": "Tuna",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55c6484dfc277c4a4f38"
+  },
+  "item": "Pig",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:26:14.487Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55fb484dfc277c4a4f62"
+  },
+  "item": "Yankees",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55fb484dfc277c4a4f63"
+  },
+  "item": "Knicks",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55fb484dfc277c4a4f64"
+  },
+  "item": "Nets",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55fb484dfc277c4a4f65"
+  },
+  "item": "Giants",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae55fb484dfc277c4a4f66"
+  },
+  "item": "Golden State Warriors",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:27:07.851Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5634484dfc277c4a4f90"
+  },
+  "item": "TFT",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5634484dfc277c4a4f91"
+  },
+  "item": "League",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5634484dfc277c4a4f92"
+  },
+  "item": "Osu",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5634484dfc277c4a4f93"
+  },
+  "item": "Genshin Impact",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5634484dfc277c4a4f94"
+  },
+  "item": "Minecraft",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:04.071Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5669484dfc277c4a4fc3"
+  },
+  "item": "Spain",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5669484dfc277c4a4fc4"
+  },
+  "item": "Japan",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5669484dfc277c4a4fc5"
+  },
+  "item": "Morocco",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5669484dfc277c4a4fc6"
+  },
+  "item": "Peru",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5669484dfc277c4a4fc7"
+  },
+  "item": "Korea",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:28:57.373Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5696484dfc277c4a4ffa"
+  },
+  "item": "OCaml",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:29:42.361Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:29:42.361Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5696484dfc277c4a4ffb"
+  },
+  "item": "C",
+  "votes": 7,
+  "createdAt": {
+    "$date": "2021-12-06T18:29:42.361Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:35:25.399Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae56e2484dfc277c4a5022"
+  },
+  "item": "Cosmos",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae56e2484dfc277c4a5023"
+  },
+  "item": "The Office",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae56e2484dfc277c4a5024"
+  },
+  "item": "Squid Game",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae56e2484dfc277c4a5025"
+  },
+  "item": "Lupin",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae56e2484dfc277c4a5026"
+  },
+  "item": "Attack on Titan",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:30:58.899Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae574a484dfc277c4a507a"
+  },
+  "item": "Salmon",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae574a484dfc277c4a5079"
+  },
+  "item": "Lamb",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae574a484dfc277c4a507b"
+  },
+  "item": "Chicken",
+  "votes": 3,
+  "createdAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae574a484dfc277c4a507c"
+  },
+  "item": "Beef",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae574a484dfc277c4a507d"
+  },
+  "item": "Pig",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:32:42.307Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae577f484dfc277c4a50ba"
+  },
+  "item": "C++",
+  "votes": 4,
+  "createdAt": {
+    "$date": "2021-12-06T18:33:35.382Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:33:35.382Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae577f484dfc277c4a50bb"
+  },
+  "item": "Rust",
+  "votes": 2,
+  "createdAt": {
+    "$date": "2021-12-06T18:33:35.382Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:33:35.382Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae577f484dfc277c4a50bc"
+  },
+  "item": "Go",
+  "votes": 1,
+  "createdAt": {
+    "$date": "2021-12-06T18:33:35.382Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:33:35.382Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae57ed484dfc277c4a50f9"
+  },
+  "item": "Fortran",
+  "votes": 5,
+  "createdAt": {
+    "$date": "2021-12-06T18:35:25.399Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:35:25.399Z"
+  },
+  "__v": 0
+}]

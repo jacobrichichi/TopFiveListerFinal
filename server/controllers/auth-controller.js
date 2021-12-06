@@ -159,7 +159,7 @@ logoutUser = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, userName, email, password, passwordVerify } = req.body;
+        let { firstName, lastName, userName, email, password, passwordVerify } = req.body;
         if (!firstName || !lastName || !userName || !email || !password || !passwordVerify) {
             return res
                 .status(200)
@@ -213,8 +213,12 @@ registerUser = async (req, res) => {
         });
         const savedUser = await newUser.save();
 
+        return res.status(200).json({
+            success: true
+        })
+
         // LOGIN THE USER
-        const token = auth.signToken(savedUser._id);
+       /* const token = auth.signToken(savedUser._id);
 
         await res.cookie("token", token, {
             httpOnly: true,
@@ -228,7 +232,7 @@ registerUser = async (req, res) => {
                 userName: savedUser.userName,
                 email: savedUser.email              
             }
-        })
+        })*/
 
     } catch (err) {
         console.error(err);

@@ -1,0 +1,118 @@
+[{
+  "_id": {
+    "$oid": "61ae585a484dfc277c4a5122"
+  },
+  "commenterUsername": "pmills",
+  "content": "goat is the goat",
+  "createdAt": {
+    "$date": "2021-12-06T18:37:14.283Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:37:14.283Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5868484dfc277c4a5129"
+  },
+  "commenterUsername": "pmills",
+  "content": "jk fish is the best you're right",
+  "createdAt": {
+    "$date": "2021-12-06T18:37:28.620Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:37:28.620Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae587c484dfc277c4a5133"
+  },
+  "commenterUsername": "pmills",
+  "content": "bro kotlin and java are like the same thing",
+  "createdAt": {
+    "$date": "2021-12-06T18:37:48.051Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:37:48.051Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae5887484dfc277c4a513e"
+  },
+  "commenterUsername": "pmills",
+  "content": "ewww wtf??",
+  "createdAt": {
+    "$date": "2021-12-06T18:37:59.445Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:37:59.445Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae589c484dfc277c4a5149"
+  },
+  "commenterUsername": "pmills",
+  "content": "wow didnt know kevin durant plays genshin that crazy",
+  "createdAt": {
+    "$date": "2021-12-06T18:38:20.961Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:38:20.961Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae58af484dfc277c4a5154"
+  },
+  "commenterUsername": "pmills",
+  "content": "true true",
+  "createdAt": {
+    "$date": "2021-12-06T18:38:39.735Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:38:39.735Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae58cb484dfc277c4a5166"
+  },
+  "commenterUsername": "pmills",
+  "content": "how did tuna even crack this list",
+  "createdAt": {
+    "$date": "2021-12-06T18:39:07.315Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:07.315Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae58e3484dfc277c4a5182"
+  },
+  "commenterUsername": "pmills",
+  "content": "gyro makes me gyrate yessir!!",
+  "createdAt": {
+    "$date": "2021-12-06T18:39:31.856Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:31.856Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61ae58f3484dfc277c4a5189"
+  },
+  "commenterUsername": "pmills",
+  "content": "python #1 lets gooo",
+  "createdAt": {
+    "$date": "2021-12-06T18:39:47.652Z"
+  },
+  "updatedAt": {
+    "$date": "2021-12-06T18:39:47.652Z"
+  },
+  "__v": 0
+}]
