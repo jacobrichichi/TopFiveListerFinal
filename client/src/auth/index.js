@@ -71,7 +71,7 @@ function AuthContextProvider(props) {
             }
             case AuthActionType.LOGIN_GUEST: {
                 return setAuth({
-                    user: null,
+                    user: payload.user,
                     loggedIn: false,
                     isGuest: true,
                     wrongCredentials: null,
@@ -150,6 +150,8 @@ function AuthContextProvider(props) {
                         user: response.data.user
                     }
                 })
+
+                localStorage.setItem('userId', response.data.user._id)
                 history.push("/");
             }
             else {
@@ -160,6 +162,19 @@ function AuthContextProvider(props) {
                     }
                 })
             }
+        }
+    }
+
+    auth.loginUserById = async function() {
+        const response = await api.loginUserById();
+        if (response.status === 200) {
+            authReducer({
+                type: AuthActionType.LOGIN_USER,
+                payload: {
+                    user: response.data.user
+                }
+            })
+            history.push("/");
         }
     }
 
@@ -180,6 +195,7 @@ function AuthContextProvider(props) {
                 payload: null
             })
             history.push("/");
+            localStorage.removeItem('userId')
         }
     }
 
@@ -200,6 +216,7 @@ function AuthContextProvider(props) {
             authReducer({
                 type: AuthActionType.LOGIN_GUEST,
                 payload: {
+                    user: response.data.user 
                 }
             })
             history.push("/");

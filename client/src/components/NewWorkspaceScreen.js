@@ -23,9 +23,27 @@ function NewWorkspaceScreen() {
 
     const [publishDisabled, setPublishDisabled] = useState(!store.canBePublished)
     const [title, setTitle] = useState("")
+    const [ isTitleEditActive, setIsTitleEditActive ] = useState(false)
 
     function handleUpdateTitle(event) {
         setTitle(event.target.value);
+    }
+
+    const handleDoubleClick = (event) => {
+        if(!store.isItemEditActive){
+            store.setIsItemEditActive(true)
+            setIsTitleEditActive(true)
+
+        }
+    }
+
+    function handleKeyPress(event) {
+        if (event.code === "Enter") {
+            let text = event.target.value;
+            store.updateListTitle(title)
+            store.setIsItemEditActive(false);
+            setIsTitleEditActive(false);
+        }
     }
 
     const handleCloseList = (event) => {
@@ -44,12 +62,15 @@ function NewWorkspaceScreen() {
 
     function handlePublish(event) {
         console.log('handlePublish')
+        store.saveList(title);
         if(title === ""){
             store.publishList(store.currentList.name)
         }
         else{
             store.publishList(title);
         }
+
+        
     }
 
     const reloadPublish = () => {
@@ -62,7 +83,7 @@ function NewWorkspaceScreen() {
                             </Typography>
                         </Button>
     if(store.canBePublished){
-        publishButton = <Button variant = "outlined" sx = {{width: "100%", height: "100%", textTransform: "none" }}>
+        publishButton = <Button variant = "outlined" onClick = {handlePublish}  sx = {{width: "100%", height: "100%", textTransform: "none" }}>
                             <Typography variant = "h3" sx = {{color: "black"}}>
                                 Publish
                             </Typography>
@@ -70,6 +91,8 @@ function NewWorkspaceScreen() {
     }                
 
     let editItems = "";
+
+    let titleCard = ""
     if (store.currentList) {
         editItems = 
             <List sx={{ width: '100%', marginLeft: "1%" }}>
@@ -85,6 +108,18 @@ function NewWorkspaceScreen() {
                     ))
                 }
             </List>;
+
+        titleCard = <Typography variant = "h5" onDoubleClick = {handleDoubleClick}>{store.currentList.name}</Typography>
+
+        if(isTitleEditActive){
+            titleCard = <TextField
+                onChange={handleUpdateTitle}
+                onKeyPress={handleKeyPress}
+                defaultValue={store.currentList.name}
+                size = "small"
+                sx ={{backgroundColor: "white"}}
+            />
+        }    
     }
 
     return (
@@ -93,12 +128,7 @@ function NewWorkspaceScreen() {
             <Box sx = {{border: '2px solid black', borderRadius: "10px", backgroundColor: "#cfcfcf", height: "70vh",width:"90%", padding: "1%", marginTop: "1%", marginLeft: "5%"}}>
                 <Grid container columns = {20}>
                     <Grid item xs = {6}>
-                        <TextField
-                            onChange={handleUpdateTitle}
-                            defaultValue={store.currentList.name}
-                            size = "small"
-                            sx ={{backgroundColor: "white"}}
-                        />
+                        {titleCard}
                     </Grid>
                     <Grid xs = {13}/>
 

@@ -67,16 +67,72 @@ deleteTop5List = async (req, res) => {
         async function asyncFindUser(list) {
             User.findOne({ email: list.ownerEmail }, (err, user) => {
                 if (user._id == req.userId) {
-                    Top5List.findOneAndDelete({ _id: req.params.id }, () => {
-                        return res.status(200).json({});
-                    }).catch(err => console.log(err))
+
+                    CommunityList.findOne({ name: list.name }, (err, communityList) => {
+                        async function asyncFindMatches(communityList, list){
+                            let comItemVals = []
+                            let comItem = {}
+    
+                            for(let i = 0; i < communityList.items.length; i++) {
+                                
+                                comItem = await CommunityItem.findOne({ _id: communityList.items[i]})
+                                comItemVals.push(comItem)
+    
+                            }
+
+                            
+                            for(let i = 0; i < list.items.length; i++){
+                                for(let j = 0; j< comItemVals.length; j++){
+                                    if(list.items[i] === comItemVals[j].item){
+                                        comItemVals[j].votes -= 5 - i
+                                       // console.log(comItemVals[j].item)
+                                       // console.log(comItemVals[j].votes)
+                                    }
+                                }
+                            }
+    
+                            comItemVals.sort((a,b) => a.votes<b.votes ? 1 : -1)
+
+                            if(comItemVals[0].votes===0){
+                                //console.log('delete list')
+
+                                CommunityList.findOneAndDelete({ _id: communityList._id }, (err, docs) => {
+
+                                })
+
+                                for(let i = 0; i<comItemVals.length; i++){
+                                   // console.log('delete item')
+                                    CommunityItem.findOneAndDelete({ _id: comItemVals[i]._id})
+                                }
+
+                                //console.log(communityList._id)
+                            }
+
+                            else{
+
+                                for(let i = 0; i<comItemVals.length; i++){
+                                    comItemVals[i].save()
+                                }
+        
+                                communityList.items = comItemVals
+        
+                                communityList.save()
+                            }
+
+                            Top5List.findOneAndDelete({ _id: req.params.id }, () => {
+                                return res.status(200).json({});
+                            }).catch(err => console.log(err))
+                        }
+    
+                        asyncFindMatches(communityList, list)
+                    });
                 }
                 else {
                     return res.status(400).json({ 
                         errorMessage: "authentication error" 
                     });
-                }
-            });
+                }   
+            });     
         }
         asyncFindUser(top5List);
     })
@@ -126,7 +182,7 @@ getPersonalLists = async (req, res) => {
                         let list = top5Lists[key];
 
 
-                        if(list.name.startsWith(req.body.keyword)){
+                        if(list.name.toLowerCase().startsWith(req.body.keyword.toLowerCase())){
                             let liked = false
                             let disliked = false
                             if(user.likes.includes(list._id)){
@@ -174,7 +230,7 @@ getAllLists = async (req, res) => {
         }
         async function asyncFindLists(user){
 
-            await Top5List.find({}, (err, top5Lists) => {
+            await Top5List.find({isPublished: true}, (err, top5Lists) => {
                 if (err) {
                     return res.status(400).json({ success: false, error: err })
                 }
@@ -187,7 +243,7 @@ getAllLists = async (req, res) => {
                     let listsInfo = [];
                     for (let key in top5Lists) {
                         let list = top5Lists[key];
-                        if(list.name.startsWith(req.body.keyword)){
+                        if(list.name.toLowerCase().startsWith(req.body.keyword.toLowerCase())){
                             let comment = [{commenterUsername: '', content: ''}]
 
                             let liked = false
@@ -240,7 +296,7 @@ getOtherUsersLists = async (req, res) => {
 
         async function asyncFindOtherUser(username, callingUser){
 
-            await User.findOne({ userName: username }, (err, otherUser) => {
+            await User.findOne({ userName: username.toLowerCase() }, (err, otherUser) => {
                 if(!otherUser){
                     console.log('no user')
                     return res.status(200).json({success: true, listsInfo: []})
@@ -248,7 +304,7 @@ getOtherUsersLists = async (req, res) => {
                 else {
 
                     async function asyncFindList(email, callingUser) {
-                        await Top5List.find({ ownerEmail: email }, (err, top5Lists) => {
+                        await Top5List.find({ ownerEmail: email, isPublished: true }, (err, top5Lists) => {
                             if(err) {
                                 return res.status(400).json({ success: false, error: err })
                             }
@@ -320,7 +376,7 @@ getCommunityLists = async (req, res) => {
                     let listsInfo = [];
                     for (let key in communityLists) {
                         let list = communityLists[key];
-                        if(list.name.startsWith(req.body.keyword)){
+                        if(list.name.toLowerCase().startsWith(req.body.keyword.toLowerCase())){
                             let comment = [{commenterUsername: '', content: ''}]
                             let item = [{item: '', votes: 0}, {item: '', votes: 0},{item: '', votes: 0},{item: '', votes: 0},{item: '', votes: 0}]
                             
@@ -438,7 +494,7 @@ getTop5Lists = async (req, res) => {
 
 updateTop5List = async (req, res) => {
     const body = req.body
-    console.log(body)
+    console.log('save')
 
     if (!body) {
         console.log('must provide body')
@@ -450,26 +506,25 @@ updateTop5List = async (req, res) => {
 
     Top5List.findOne({ _id: req.params.id }, (err, top5List) => {
         if (err) {
-            console.log('unfound listicle')
+            console.log('saving')
             return res.status(404).json({
                 err,
                 message: 'Top 5 List not found!',
             })
         }
 
-
+        console.log('saving')
         // DOES THIS LIST BELONG TO THIS USER?
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
+                console.log('saving')
                 if (user._id == req.userId) {
-                    
-                    console.log(body.top5List.name)
-                    console.log(body.top5List.items)
                     list.name = body.top5List.name;
                     list.items = body.top5List.items;
                     list
                         .save()
                         .then(() => {
+                            console.log('saving')
                             return res.status(200).json({
                                 success: true,
                                 id: list._id,
@@ -494,27 +549,29 @@ updateTop5List = async (req, res) => {
 }
 
 publishTop5List = async (req, res) => {
-
+    console.log('publishing')
     Top5List.findOne({ _id: req.params.id }, (err, top5List) => {
         if(err){
+            console.log('1')
             return res.status(404).json({
                 err,
                 message: 'Top 5 List not found!',
             })
         }
-        console.log('found')
+        console.log(top5List)
 
+        console.log('2')
         async function asyncFindUser(list) {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
 
                 //List belongs to this user
                 if (user._id == req.userId) {
-                    console.log('belongs to user')
+                    console.log('3')
 
                     //Does a published list already exist with this name by the same user
                     Top5List.findOne({ name: list.name, ownerEmail: list.ownerEmail, isPublished: true }, (err, dupList) => {
                         
-                        
+                        console.log('4')
                         if(dupList != null){
                             
                             return res
@@ -525,7 +582,7 @@ publishTop5List = async (req, res) => {
                                 })
                         }
 
-                        console.log('no dup list')
+                        console.log('5')
                         // If here, publishing can begin
 
                         list.isPublished = true
@@ -535,19 +592,43 @@ publishTop5List = async (req, res) => {
 
                             // Community list for this name already exists, just add to it
                             if(communityList != null){
-                                for(let i = 0; i < communityList.items.length; i++){
-                                    let comItem = CommunityList.findOne({_id: communityList.items[i]})
-
-                                    for(let j = 0; j < top5List.items.length; j++){
-                                        if(top5List.items[i] === comItem.item){
-                                            comItem.votes += 1
-                                        }
+                                
+                                async function asyncFindMatches(communityList, list){
+                                    let comItemVals = []
+                                    let comItem = {}
+    
+                                    for(let i = 0; i < communityList.items.length; i++) {
+                                        comItem = await CommunityItem.findOne({_id: communityList.items[i]})
+                                        console.log(comItem)
+                                        comItemVals.push(comItem)
+    
                                     }
+                                    
+                                    for(let i = 0; i < list.items.length; i++){
+                                        let found = false
+                                        for(let j = 0; j< comItemVals.length; j++){
+                                            if(list.items[i] === comItemVals[j].item){
+                                                found = true
+                                                comItemVals[j].votes += 5 - i
+                                            }
+                                        }
+    
+                                        if(!found){
+                                            comItem = new CommunityItem({ item: list.items[i], votes: 5 - i })
+                                            comItemVals.push(comItem)
+                                        }
+    
+                                    }
+    
+                                    comItemVals.sort((a,b) => a.votes<b.votes ? 1 : -1)
+    
+                                    for(let i = 0; i<comItemVals.length; i++){
+                                        comItemVals[i].save()
+                                    }
+    
+                                    communityList.items = comItemVals
 
-                                    comItem.save()
-                                }
-
-                                communityList.save()
+                                    communityList.save()
                                         .then(() => {
                                             list.save()
                                                     .then(() => {
@@ -570,7 +651,10 @@ publishTop5List = async (req, res) => {
                                                 message: 'Community List not saved'
                                             })
                                         })
+                                }
 
+                                asyncFindMatches(communityList, list)
+                            
                             }
 
                             // Need to create new community list
@@ -581,6 +665,7 @@ publishTop5List = async (req, res) => {
                                 //Initialize new community list items
                                 for(let i = 0; i<list.items.length; i++){
                                     let itemVals = { item: list.items[i], votes: 5-i}
+                                    console.log(itemVals)
                                     let comItem = new CommunityItem(itemVals)
 
                                     comItem.save()
@@ -596,7 +681,11 @@ publishTop5List = async (req, res) => {
                                     lastEditDate: new Date()
                                 }
 
+
+
                                 let newComList = new CommunityList(comListVals);
+
+                                console.log(newComList)
 
                                 newComList.save()
                                         .then(() => {
@@ -633,6 +722,7 @@ publishTop5List = async (req, res) => {
         asyncFindUser(top5List)
 
     })
+    
 
 }
 
@@ -782,18 +872,43 @@ getComments = async (req, res) => {
             })
         }
 
-        async function asyncGetComments(list){
-            let commentsContents = []
-            let oneContent = {}
+        async function asyncFindUser(list){
 
-            for(let i = 0; i<list.comments.length; i++){
-                oneContent = await Comment.findOne({ _id: list.comments[i] })
-                commentsContents.push({ commenterUsername: oneContent.commenterUsername, content: oneContent.content })
-            }
+            await User.findOne({ _id: req.userId}, (err, user) => {
+                if(err){
+                    return res.status(404).json({
+                        err,
+                        message: "user not found"
+                    })
+                }
+                async function asyncGetComments(list, user){
+                    let commentsContents = []
+                    let oneContent = {}
 
-            return res.status(200).json({ comments: commentsContents })
+                    for(let i = 0; i<list.comments.length; i++){
+                        oneContent = await Comment.findOne({ _id: list.comments[i] })
+                        commentsContents.push({ commenterUsername: oneContent.commenterUsername, content: oneContent.content })
+                    }
+
+                    if(list.ownerUsername !== user.userName){
+                        list.views += 1
+                    }
+
+                    list.save()
+                        .then(() => {
+                            return res.status(200).json({ comments: commentsContents })
+                        }).catch(error => {
+                            console.log(error)
+                            return res.status(404).json({
+                                error,
+                                message: 'List not opened properly'
+                            })
+                        })
+                }
+                asyncGetComments(list, user)
+            })
         }
-        asyncGetComments(top5List)
+        asyncFindUser(top5List)
     })
 }
 
@@ -824,8 +939,19 @@ getCommunityListRefs = async (req, res) => {
                     oneItem = await CommunityItem.findOne({ _id: list.items[i]})
                     items.push({ item: oneItem.item, votes: oneItem.votes })
                 }
+                
+                list.views += 1
 
-                return res.status(200).json({ comments: commentsContents, items: items })
+                list.save()
+                    .then(() => {
+                        return res.status(200).json({ comments: commentsContents, items: items })
+                    }).catch(error => {
+                        return res.status(404).json({
+                            error,
+                            message: 'List not opened properly'
+                        })
+                    })
+
             }
             asyncGetItems(list)
 

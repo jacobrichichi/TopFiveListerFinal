@@ -14,29 +14,45 @@ export default function ListViewing(props){
         return(    
             <Box sx = {{backgroundColor: "purple", borderRadius: "10px", height: "100%", paddingTop: "0%", width: "96%", paddingLeft: "2%", marginLeft: "2%"}}>
                 <Grid container>
-                    <Grid item xs = {12} sx = {{paddingTop: "3vh", paddingBottom: "1vh"}}>
+                    <Grid item xs = {12} sx = {{paddingTop: "1vh", paddingBottom: ".5vh"}}>
                         <Typography sx = {{fontSize: "24pt", color: "yellow"}}>
                             1.  {items[0].item}
                         </Typography>
+                        <Typography sx = {{fontSize: "12pt", color: "yellow"}}>
+                            ({items[0].votes} votes)
+                        </Typography>
+
                     </Grid>
-                    <Grid item xs = {12} sx = {{paddingTop: "1vh", paddingBottom: "1vh"}}>
+                    <Grid item xs = {12} sx = {{paddingTop: ".5vh", paddingBottom: ".5vh"}}>
                         <Typography sx = {{fontSize: "24pt", color: "yellow"}}>
                             2. {items[1].item}
                         </Typography>
+                        <Typography sx = {{fontSize: "12pt", color: "yellow"}}>
+                            ({items[1].votes} votes)
+                        </Typography>
                     </Grid>
-                    <Grid item xs = {12} sx = {{paddingTop: "1vh", paddingBottom: "1vh"}}>
+                    <Grid item xs = {12} sx = {{paddingTop: ".5vh", paddingBottom: ".5vh"}}>
                         <Typography sx = {{fontSize: "24pt", color: "yellow"}}>
                             3. {items[2].item}
                         </Typography>
+                        <Typography sx = {{fontSize: "12pt", color: "yellow"}}>
+                            ({items[2].votes} votes)
+                        </Typography>
                     </Grid>
-                    <Grid item xs = {12} sx = {{paddingTop: "1vh", paddingBottom: "1vh"}}>
+                    <Grid item xs = {12} sx = {{paddingTop: ".5vh", paddingBottom: ".5vh"}}>
                         <Typography sx = {{fontSize: "24pt", color: "yellow"}}>
                             4.  {items[3].item}
                         </Typography>
+                        <Typography sx = {{fontSize: "12pt", color: "yellow"}}>
+                            ({items[3].votes} votes)
+                        </Typography>
                     </Grid>
-                    <Grid item xs = {12} sx = {{paddingTop: "1vh", paddingBottom: "3vh"}}>
+                    <Grid item xs = {12} sx = {{paddingTop: ".5vh", paddingBottom: "1vh"}}>
                         <Typography sx = {{fontSize: "24pt", color: "yellow"}}>
                             5. {items[4].item}
+                        </Typography>
+                        <Typography sx = {{fontSize: "12pt", color: "yellow"}}>
+                            ({items[4].votes} votes)
                         </Typography>
                     </Grid>
                 </Grid>

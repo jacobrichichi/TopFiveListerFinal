@@ -29,6 +29,23 @@ getLoggedIn = async (req, res) => {
     }
 }
 
+
+loginUserById = async (req, res) => {
+    console.log(req.userId)
+    await User.findOne({ _id: req.userId }, (err, existingUser) => {
+        return res.status(200).json({
+            success: true,
+            user: {
+                firstName: existingUser.firstName,
+                lastName: existingUser.lastName,  
+                userName: existingUser.userName,
+                email: existingUser.email              
+            }
+        })
+    })
+}
+
+
 loginUser = async (req, res) => {
     try {
         
@@ -88,7 +105,11 @@ loginUser = async (req, res) => {
 }
 
 loginGuest = async (req, res) => {
-    const token = auth.signToken('Guest');
+
+    //Sign token with the guest account
+    const token = auth.signToken("61acf37c1a2a0f4ef8738b91");
+
+    console.log('guestBeingMade')
 
     res.cookie("token", token, {
         httpOnly: true,
@@ -98,7 +119,8 @@ loginGuest = async (req, res) => {
         success: true,
         user: {
             firstName:'Guest',
-            lastName: 'Uest',  
+            lastName: 'Guest',  
+            userName: "Guest",
             email: 'guest@guest.guest'              
         }
     })
@@ -137,7 +159,7 @@ registerUser = async (req, res) => {
                     errorMessage: "Please enter the same password twice."
                 })
         }
-        let existingUser = await User.findOne({ email: email });
+        let existingUser = await User.findOne({ email: email.toLowerCase() });
         if (existingUser) {
             return res
                 .status(200)
@@ -147,7 +169,7 @@ registerUser = async (req, res) => {
                 })
         }
 
-        existingUser = await User.findOne({ userName: userName });
+        existingUser = await User.findOne({ userName: userName.toLowerCase() });
         if (existingUser) {
             return res
                 .status(200)
@@ -160,6 +182,9 @@ registerUser = async (req, res) => {
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
         const passwordHash = await bcrypt.hash(password, salt);
+
+        userName = userName.toLowerCase()
+        email = email.toLowerCase()
 
         const newUser = new User({
             firstName, lastName, userName, email, passwordHash
@@ -193,6 +218,7 @@ module.exports = {
     getLoggedIn,
     registerUser,
     loginUser,
+    loginUserById,
     logoutUser,
     loginGuest
 }

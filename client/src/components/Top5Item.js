@@ -25,8 +25,6 @@ function Top5Item(props) {
             store.updateItem(index-1, text)
             store.setIsItemEditActive(false);
             setEditActive(false);
-            console.log(store.canBePublished)
-            props.reloadPublish()
         }
     }
 

@@ -63,7 +63,6 @@ export default function ListCard(props) {
     }
 
     const handleExpandMore = (event) => {
-
         store.expandList(listInfo._id)
         setIsExpanded(true)
     }
@@ -87,12 +86,17 @@ export default function ListCard(props) {
 
     let publishDateOrEdit = ""
     let backgroundColor = ""
+
     let deleteIcon = <IconButton onClick = {handleDelete}>
                         <DeleteIcon sx = {{fontSize: "54px"}}/>
                     </IconButton> 
 
+    let author = <Typography variant = "subtitle1">
+                    By:  {listInfo.ownerUsername}
+                </Typography> 
+
     if(listInfo.isPublished){
-        publishDateOrEdit = <Typography variant = "subtitle1">Published: {listInfo.publishDate.toString().split('T')[0]}</Typography>
+        publishDateOrEdit = <Typography variant = "subtitle1"><b>Published:</b> {listInfo.publishDate.toString().split('T')[0]}</Typography>
         backgroundColor = "white"
     }
 
@@ -100,12 +104,24 @@ export default function ListCard(props) {
         publishDateOrEdit = <Typography variant = "subtitle1">Updated: {listInfo.lastEditDate.toString().split('T')[0]}</Typography>
         backgroundColor = "#76b5b5"
         deleteIcon = ""
+        author = ""
     }
 
     else{
         publishDateOrEdit = <Button onClick = {handleStartEdit}>Edit</Button>
         backgroundColor = "#b5b5b5"
     }
+
+    if(store.isGuest || listInfo.ownerUsername !== auth.user.userName){
+        deleteIcon = ""
+    }
+
+    let commentBox =<TextField 
+                        sx = {{width: "100%" }}
+                        onKeyPress={handleKeyPress}
+                        onChange={handleUpdateComment}>
+
+                    </TextField>
 
     let likeButton =<IconButton onClick = {handleLike}>
                         <ThumbUpIcon sx = {{fontSize: "54px"}}/>
@@ -124,6 +140,22 @@ export default function ListCard(props) {
         dislikeButton = <IconButton onClick = {handleDislike}>
                             <ThumbDownIcon sx = {{fontSize: "54px", color: 'red'}}/>
                         </IconButton>   
+    }
+
+
+
+    if(auth.isGuest || listInfo.ownerUsername === auth.user.userName){
+        likeButton = <IconButton disabled = {true}>
+                        <ThumbUpIcon sx = {{fontSize: "54px"}}/>
+                    </IconButton>  
+                    
+        dislikeButton = <IconButton disabled = {true}>
+            <ThumbDownIcon sx = {{fontSize: "54px" }}/>
+        </IconButton>   
+
+        if(auth.isGuest){
+            commentBox = ""
+        }
     }
 
 
@@ -158,18 +190,50 @@ export default function ListCard(props) {
                         </List>
                     </Grid>
                     <Grid item xs = {12}>
-                        <TextField 
-                            sx = {{width: "100%" }}
-                            onKeyPress={handleKeyPress}
-                            onChange={handleUpdateComment}>
-
-                        </TextField>
+                        {commentBox}
                     </Grid>
                 </Grid>
 
+                            
 
 
-        openedListDetails = <Grid container style ={{height: "42vh"}}>
+        if(store.listsCollectionType==='COMMUNITY'){
+            commentList = <Grid container>
+                        <Grid item xs = {12} style = {{ overflow: "scroll", height: "43vh"}}>
+                            <List sx={{ width: '90%', left: '5%' }}>
+                                {
+                                    listInfo.comments.map((comment) => (
+                                        <Box sx = {{backgroundColor: "orange", border: "2px solid black", borderRadius: "10px", marginBottom: "2%", padding: "1%"}}>
+                                            <Typography sx = {{fontSize: "12pt", color: "blue", textDecoration: "underline"}}>
+                                                {comment.commenterUsername}
+                                            </Typography>
+
+                                            <Typography sx = {{fontSize: "16pt"}}>
+                                                {comment.content}
+                                            </Typography>
+                                        </Box>
+                                    ))
+                                }
+                            </List>
+                        </Grid>
+                        <Grid item xs = {12}>
+                            {commentBox}
+                        </Grid>
+                    </Grid>               
+
+            openedListDetails = <Grid container style ={{height: "50vh"}}>
+                                    <Grid item xs = {6}>
+                                        <ListViewing items = {listInfo.items}/>
+                                    </Grid>
+
+                                    <Grid item xs = {6}>
+                                        {commentList}
+                                    </Grid>
+                                </Grid>
+        }
+
+        else{
+            openedListDetails = <Grid container style ={{height: "42vh"}}>
                                 <Grid item xs = {6}>
                                     <ListViewing items = {listInfo.items}/>
                                 </Grid>
@@ -178,12 +242,14 @@ export default function ListCard(props) {
                                     {commentList}
                                 </Grid>
                             </Grid>
+        }
+
     }
 
     return(
         <Box sx ={{paddingTop: "16px"}}>
             <Box 
-                backgroundColor = {backgroundColor}
+                 backgroundColor = {backgroundColor}
                 sx = {{border: '2px solid black', borderRadius: "15px" }}
                 >
                 <Grid container spacing = {2} columns = {17}  sx = {{paddingTop: "1%", paddingLeft: "1%", paddingRight: "1%", paddingBottom: "1%"}}>
@@ -192,9 +258,7 @@ export default function ListCard(props) {
                             {listInfo.name}
                         </Typography>
 
-                        <Typography variant = "subtitle1">
-                            By:  {listInfo.ownerUsername}
-                        </Typography>
+                        {author}
                     </Grid>
 
                     <Grid item xs = {9}>

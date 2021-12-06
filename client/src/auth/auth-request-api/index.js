@@ -30,6 +30,10 @@ export const loginUser = (email, password) => {
         password : password
     })
 }
+
+export const loginUserById = () => {
+    return api.post(`/loginById/`)
+}
 export const logoutUser = () => api.get(`/logout/`)
 export const registerUser = (firstName, lastName, userName, email, password, passwordVerify) => {
     return api.post(`/register/`, {
@@ -47,6 +51,7 @@ const apis = {
     getLoggedIn,
     registerUser,
     loginUser,
+    loginUserById,
     logoutUser,
     loginGuest
 }

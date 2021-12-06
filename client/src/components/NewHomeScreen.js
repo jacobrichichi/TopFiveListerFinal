@@ -42,7 +42,7 @@ export default function NewHomeScreen(){
         bottomText = store.searchCriteria + " Lists";
     }
 
-    else if(store.listsCollectionType === 'COMMUNITY_LISTS'){
+    else if(store.listsCollectionType === 'COMMUNITY'){
         if(store.searchCriteria !== ''){
             bottomText = store.searchCriteria + " Community Lists";
         }

@@ -49,12 +49,22 @@ export default function NewEditToolbar(){
     }
 
     const handleSortByDateOldest = (event) => {
-        store.sortByDateOldest();
+        if(store.listsCollectionType==='COMMUNITY'){
+            store.sortCommunityByDateOldest()
+        }
+        else{
+            store.sortByDateOldest();
+        }
         setAnchorEl(null);
     }
 
     const handleSortByDateNewest = (event) => {
-        store.sortByDateNewest();
+        if(store.listsCollectionType==='COMMUNITY'){
+            store.sortCommunityByDateNewest()
+        }
+        else{
+            store.sortByDateNewest();
+        }
         setAnchorEl(null);
     }
     const handleSortByViews = (event) => {
@@ -116,9 +126,9 @@ export default function NewEditToolbar(){
 
 
 
-    let editStatus = false;
-    if (store.isListNameEditActive) {
-        editStatus = true;
+    let disabled = false;
+    if (store.inWorkspace) {
+        disabled = true;
     }
 
 
@@ -127,7 +137,7 @@ export default function NewEditToolbar(){
             <Grid container spacing = {0} columns = {96}>
                 <Grid item xs = {5}>
                     <IconButton 
-                        disabled={editStatus}
+                        disabled={disabled}
                         onClick={handlePersonalLists}>
                             <HomeIcon sx = {{fontSize: "54px"}}/>
                     </IconButton>
@@ -135,7 +145,7 @@ export default function NewEditToolbar(){
 
                 <Grid item xs = {5}>
                     <IconButton 
-                        disabled={editStatus}
+                        disabled= {disabled}
                         onClick={handleAllLists}
                         sx = {{height: "100%"}}>
                             <GroupsIcon sx = {{fontSize: "54px"}}/>
@@ -144,7 +154,7 @@ export default function NewEditToolbar(){
 
                 <Grid item xs = {5}>
                     <IconButton 
-                        disabled={editStatus}
+                        disabled={disabled}
                         onClick= {handleSwitchToOtherUser}
                         sx = {{height: "100%"}}>
                             <PersonIcon sx = {{fontSize: "54px"}}/>
@@ -153,7 +163,7 @@ export default function NewEditToolbar(){
 
                 <Grid item xs = {5}>
                     <IconButton 
-                        disabled={editStatus}
+                        disabled={disabled}
                         onClick={handleCommunity}
                         sx = {{height: "100%"}}>
                             <FunctionsIcon sx = {{fontSize: "54px"}}/>
@@ -162,6 +172,7 @@ export default function NewEditToolbar(){
                 
                 <Grid item xs = {40}>
                     <TextField 
+                            disabled = {disabled}
                             onKeyPress={handleKeyPress}
                             onChange={handleUpdateText}
                             sx = {{width: "100%", paddingTop: "2%"}} 
@@ -179,7 +190,7 @@ export default function NewEditToolbar(){
 
                 <Grid item xs = {4}>
                     <IconButton 
-                        disabled={editStatus}
+                        disabled={disabled}
                         onClick={handleMenuOpen}
                         sx = {{height: "100%"}}
                         onClick = {handleMenuOpen}>

@@ -30,7 +30,8 @@ export const GlobalStoreActionType = {
     SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
     CLOSE_CURRENT_LIST_FOR_EDITING: "CLOSE_CURRENT_LIST_FOR_EDITING",
     CLOSE_CURRENT_LIST_FOR_VIEWING: "CLOSE_CURRENT_LIST_FOR_VIEWING",
-    UPDATE_LISTSINFO: "UPDATE_LISTSINFO"
+    UPDATE_LISTSINFO: "UPDATE_LISTSINFO",
+    SET_LIST_AND_CBP: "SET_LIST_AND_CBP"
 }
 
 // WITH THIS WE'RE MAKING OUR GLOBAL DATA STORE
@@ -83,8 +84,8 @@ function GlobalStoreContextProvider(props) {
             // STOP EDITING THE CURRENT LIST
             case GlobalStoreActionType.CLOSE_CURRENT_LIST_FOR_EDITING: {
                 return setStore({
-                    listsInfo: store.listsInfo,
-                    listsCollectionType: store.listsCollectionType,
+                    listsInfo: payload.listsInfo,
+                    listsCollectionType: "PERSONAL",
                     currentList: null,
                     inWorkspace: false,
                     newListCounter: store.newListCounter,
@@ -198,6 +199,22 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: false,
                     listMarkedForDeletion: null,
                     searchCriteria: store.searchCriteria,
+                    canBePublished: store.canBePublished
+                });
+            }
+
+            // UPDATE A LIST
+            case GlobalStoreActionType.SET_LIST_AND_CBP: {
+                return setStore({
+                    listsInfo: store.listsInfo,
+                    listsCollectionType: store.listsCollectionType,
+                    currentList: payload.currentList,
+                    inWorkspace: true,
+                    newListCounter: store.newListCounter,
+                    isListNameEditActive: false,
+                    isItemEditActive: false,
+                    listMarkedForDeletion: null,
+                    searchCriteria: store.searchCriteria,
                     canBePublished: payload.canBePublished
                 });
             }
@@ -245,7 +262,7 @@ function GlobalStoreContextProvider(props) {
                     isItemEditActive: payload.isItemEditActive,
                     listMarkedForDeletion: store.listMarkedForDeletion,
                     searchCriteria: store.searchCriteria,
-                    canBePublished: payload.canBePublished
+                    canBePublished: store.canBePublished
                 });
             }
 
@@ -322,10 +339,13 @@ function GlobalStoreContextProvider(props) {
             async function updateList(top5List) {
                 response = await api.updateTop5ListById(top5List._id, top5List);
                 if (response.status === 200) {
+                    let canBePublished = store.canBePublishedCheck(top5List)
+
                     storeReducer({
-                        type: GlobalStoreActionType.SET_CURRENT_LIST_FOR_EDITING,
+                        type: GlobalStoreActionType.SET_LIST_AND_CBP,
                         payload: {
-                            currentList: top5List
+                            currentList: top5List,
+                            canBePublished: canBePublished
                         }
                     });
 
@@ -337,11 +357,25 @@ function GlobalStoreContextProvider(props) {
 
     store.publishList = async function(title) {
         // First simulate the event that the user saved the list before publishing in case they did not
-        store.saveList(title);
 
         console.log(store.currentList._id)
         let response = await api.publishTop5ListById(store.currentList._id)
 
+        if(response.status === 200){
+
+            response = await api.getPersonalLists('')
+
+            if(response.status === 200){
+                storeReducer({
+                    type: GlobalStoreActionType.CLOSE_CURRENT_LIST_FOR_EDITING,
+                    payload: { listsInfo: response.data.listsInfo }
+                })
+
+                history.push("/");
+            }
+
+
+        }
 
 
 
@@ -476,10 +510,9 @@ function GlobalStoreContextProvider(props) {
 
             response = await api.updateTop5ListById(top5List._id, top5List);
             if (response.status === 200) {
-                let canBePublished = store.canBePublishedCheck(top5List)
                 storeReducer({
                     type: GlobalStoreActionType.SET_CURRENT_LIST_FOR_EDITING,
-                    payload: {currentList: top5List, canBePublished: canBePublished}
+                    payload: {currentList: top5List }
                 });
                // history.push("/top5list/" + top5List._id);
             }
@@ -492,7 +525,7 @@ function GlobalStoreContextProvider(props) {
             let top5List = response.data.top5List;
             let canBePublished = store.canBePublishedCheck(top5List)
             storeReducer({
-                type: GlobalStoreActionType.SET_CURRENT_LIST_FOR_EDITING,
+                type: GlobalStoreActionType.SET_LIST_AND_CBP,
                 payload: {currentList: top5List, canBePublished: canBePublished}
             });
             history.push("/top5list/" + top5List._id);
@@ -515,12 +548,21 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.updateCurrentList = async function () {
-        let canBePublished = store.canBePublishedCheck(store.currentList)
         storeReducer({
             type: GlobalStoreActionType.SET_CURRENT_LIST_FOR_EDITING,
-            payload: {currentList: store.currentList, canBePublished: canBePublished}
+            payload: {currentList: store.currentList }
         });
         
+    }
+
+    store.updateListTitle = function(newTitle){
+        let list = store.currentList
+        list.name = newTitle
+
+        storeReducer({
+            type: GlobalStoreActionType.SET_CURRENT_LIST_FOR_EDITING,
+            payload: {currentList: list}
+        })
     }
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING A LIST NAME
@@ -533,10 +575,9 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION ENABLES THE PROCESS OF EDITING AN ITEM
     store.setIsItemEditActive = function (editActive) {
-        let canBePublished = store.canBePublishedCheck(store.currentList)
         storeReducer({
             type: GlobalStoreActionType.SET_ITEM_EDIT_ACTIVE,
-            payload: { isItemEditActive: editActive, canBePublished: canBePublished }
+            payload: { isItemEditActive: editActive }
         });
     }
 
@@ -585,6 +626,7 @@ function GlobalStoreContextProvider(props) {
                     if(listsInfo[i]._id === listId){
                         listsInfo[i].comments = response.data.comments
                         listsInfo[i].items = response.data.items
+                        listsInfo[i].views += 1
                         break
                     }
                 }
@@ -608,6 +650,10 @@ function GlobalStoreContextProvider(props) {
                 for(let i = 0; i<listsInfo.length; i++){
                     if(listsInfo[i]._id === listId){
                         listsInfo[i].comments = response.data.comments
+
+                        if(listsInfo[i].ownerUsername !== auth.user.userName){
+                            listsInfo[i].views += 1
+                        }
                         break
                     }
                 }
@@ -702,7 +748,7 @@ function GlobalStoreContextProvider(props) {
 
     store.sortByDateOldest = function(){
         let listsInfo = store.listsInfo
-        listsInfo.sort((a, b) => (a.publishDate < b.publishDate) ? 1 : -1)
+        listsInfo.sort((a, b) => (a.publishDate > b.publishDate) ? 1 : -1)
 
         storeReducer({
             type: GlobalStoreActionType.UPDATE_LISTSINFO,
@@ -712,7 +758,27 @@ function GlobalStoreContextProvider(props) {
 
     store.sortByDateNewest = function(){
         let listsInfo = store.listsInfo
-        listsInfo.sort((a, b) => (a.publishDate > b.publishDate) ? 1 : -1)
+        listsInfo.sort((a, b) => (a.publishDate < b.publishDate) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
+    }
+
+    store.sortCommunityByDateOldest = function(){
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.lastEditDate > b.lastEditDate) ? 1 : -1)
+
+        storeReducer({
+            type: GlobalStoreActionType.UPDATE_LISTSINFO,
+            payload: listsInfo
+        })
+    }
+
+    store.sortCommunityByDateNewest = function(){
+        let listsInfo = store.listsInfo
+        listsInfo.sort((a, b) => (a.lastEditDate < b.lastEditDate) ? 1 : -1)
 
         storeReducer({
             type: GlobalStoreActionType.UPDATE_LISTSINFO,
